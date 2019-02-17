@@ -1,0 +1,23 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{title}}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body" [innerHTML]="text">
+</div>
+<div class="modal-body" *ngIf="dialog === 2">
+  <fieldset class="form-group align-middle">
+    <label>Comment</label>
+    <textarea class="form-control" name="comment" rows="4" [(ngModel)]="comment"
+              id="comment" placeholder="Enter a reason"></textarea>
+  </fieldset>
+</div>
+<div class="modal-footer">
+  <button *ngIf="dialog === 1" type="button" class="btn btn-secondary" (click)="activeModal.close(true)">OK</button>
+  <button *ngIf="dialog === 2" type="button" class="btn btn-secondary" [disabled]="!comment"
+          (click)="activeModal.close(comment)">OK
+  </button>
+  <button *ngIf="dialog" type="button" class="btn btn-secondary" (click)="activeModal.close(false)">Cancel</button>
+  <button *ngIf="!dialog" type="button" class="btn btn-secondary" (click)="activeModal.close(true)">Close</button>
+</div>
