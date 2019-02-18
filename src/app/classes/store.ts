@@ -1,0 +1,33 @@
+export class Store {
+  _id: string;
+  storeName: string;
+  differentFulfillment: boolean;
+  fulfillmentService: boolean;
+  fulfillmentServiceId: number;
+  sendField: string;
+  company: string;
+  merchantIdentifier: string;
+  apiKeyBorderGuru: string;
+  apiKeyMerchant: string;
+  apiKeyShopify: string;
+  apiSecretShopify: string;
+  apiKeyAdmin: string;
+  apiSecretAdmin: string;
+  accountNumber: string;
+  countryOfOrigin: string;
+  countryCode: string;
+  state: string;
+  city: string;
+  postcode: string;
+  houseNo: string;
+  streetName: string;
+  location: string;
+  locationAddress: string;
+  totalWeightScale: string;
+  weight: number;
+  dimensionalScale: string;
+  length: number;
+  width: number;
+  height: number;
+  created: string;
+}
