@@ -13,23 +13,23 @@ export class UserService {
   }
 
   getUsers(tableParams: any): Observable<UsersList> {
-    return;
+    return this.http.get<UsersList>(Settings.API_ENDPOINT + '/users/', {params: tableParams});
   }
 
-  getUser(id: number): Observable<User> {
-    return;
+  getUser(_id: string): Observable<User> {
+    return this.http.get<User>(Settings.API_ENDPOINT + '/users/' + _id);
   }
 
-  deleteUser(id: number): Observable<any> {
-    return;
+  deleteUser(_id: string): Observable<any> {
+    return this.http.delete<any>(Settings.API_ENDPOINT + '/users/' + _id);
   }
 
-  addUser(user: User) {
-    return;
+  addUser(user: User): Observable<User> {
+    return this.http.post<User>(Settings.API_ENDPOINT + '/users/', user);
   }
 
   updateUser(user: User) {
-    return;
+    return this.http.put(Settings.API_ENDPOINT + '/users/', user);
   }
 
 }

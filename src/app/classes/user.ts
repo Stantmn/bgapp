@@ -1,5 +1,5 @@
 export class User {
-  id: string;
+  _id: string;
   email: string;
   password: string;
   confirmPassword: string;
@@ -8,6 +8,7 @@ export class User {
   expiration: string;
   role: string;
   status: string;
-  storeId: string;
+  submerchant: string;
+  storeName: string;
   isLogged: boolean;
 }

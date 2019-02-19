@@ -1,7 +1,7 @@
 <div [@routerTransition]>
   <app-page-header [heading]="'Users'" [icon]="'fa-edit'"></app-page-header>
 
-  <div class="row">
+  <div class="row" *ngIf="showFormFlag">
     <div class="col-lg-6">
 
       <form #userForm="ngForm">
@@ -15,13 +15,13 @@
         <fieldset class="form-group">
           <label>Password *</label>
           <input class="form-control" [(ngModel)]="user.password" name="password" type="password"
-                 id="password" placeholder="Enter a password" required>
+                 id="password" placeholder="Enter a password">
         </fieldset>
 
         <fieldset class="form-group">
           <label>Confirm Password *</label>
           <input class="form-control" [(ngModel)]="user.confirmPassword" name="confirmPassword" type="password"
-                 id="confirmPassword" placeholder="Confirm Password" required>
+                 id="confirmPassword" placeholder="Confirm Password">
           <p *ngIf="user.password !== user.confirmPassword" class="help-block">Passwords should be equal</p>
         </fieldset>
 
@@ -43,8 +43,8 @@
 
         <fieldset class="form-group">
           <label>Store *</label>
-          <select class="form-control" [(ngModel)]="user.storeId" name="status" required>
-            <option *ngFor="let item of storesList?.stores" [ngValue]="item.storeName">{{ item.storeName }}
+          <select class="form-control" [(ngModel)]="user.submerchant" name="status" required>
+            <option *ngFor="let item of storesList" [ngValue]="item._id">{{ item.storeName }}
             </option>
           </select>
         </fieldset>
@@ -55,12 +55,55 @@
         <div class="col-2">
           <button class="btn btn-warning btn-space" (click)="userCancel()">Cancel</button>
         </div>
+        <div class="col-1"></div>
         <div class="col-2">
           <button class="btn btn-success btn-space" (click)="userSave()"
-                  [disabled]="!userForm.form.valid && !user.password && (user.password === user.confirmPassword)">
+                  [disabled]="!userForm.form.valid">
             &nbsp;&nbsp;Save&nbsp;&nbsp;
           </button>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>
+  <button class="btn btn-success" (click)="showForm(!showFormFlag)" *ngIf="!showFormFlag">Add New</button>
+  <br>
+  <br>
+</div>
+
+<div class="row">
+  <div class="col col-xl-12 col-lg-12">
+    <div class="card mb-3">
+      <div class="card-header">Users</div>
+      <div class="card-block table-responsive">
+        <table class="table table-bordered">
+          <thead class="thead-inverse">
+          <tr>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Store</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let user of usersList;">
+            <td>{{user.email}}</td>
+            <td>{{user.role}}</td>
+            <td>{{user.status}}</td>
+            <td>{{user.storeName}}</td>
+            <td>
+              <button class="btn btn-warning" (click)="editUser(user._id)">Edit</button>
+            </td>
+            <td>
+              <button class="btn btn-danger" (click)="deleteUser(user._id)">Delete</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
