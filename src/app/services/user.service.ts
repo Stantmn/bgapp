@@ -6,6 +6,11 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
+export interface Login {
+  email: string;
+  password: string;
+}
+
 @Injectable()
 export class UserService {
 
@@ -30,6 +35,29 @@ export class UserService {
 
   updateUser(user: User) {
     return this.http.put(Settings.API_ENDPOINT + '/users/', user);
+  }
+
+  login(login: Login): Observable<any> {
+    return this.http.post<any>(Settings.API_ENDPOINT + '/users/login', login);
+  }
+
+  getToken(): string {
+    return localStorage.getItem('token');
+  }
+
+  getUserStorage(): User {
+    const user = new User;
+    user.email = localStorage.getItem('email');
+    user.token = localStorage.getItem('token');
+    user.expiration = localStorage.getItem('expiration');
+    return user;
+  }
+
+  setToLocalStorage(user: User): void {
+    localStorage.setItem('email', user.email);
+    localStorage.setItem('token', user.token);
+    localStorage.setItem('expiration', user.expiration);
+    localStorage.setItem('isLogged', 'true');
   }
 
 }
