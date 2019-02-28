@@ -1,57 +1,86 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
+import { User } from '../../../classes/user';
+import { UserService } from '../../../services/user.service';
 
 @Component({
-    selector: 'app-header',
-    templateUrl: './header.component.html',
-    styleUrls: ['./header.component.scss']
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-    public pushRightClass: string;
+  public pushRightClass: string;
+  public user: User;
 
-    constructor(private translate: TranslateService, public router: Router) {
+  constructor(public router: Router, private userService: UserService) {
+  }
 
-        this.translate.addLangs(['en', 'fr', 'ur', 'es', 'it', 'fa', 'de', 'zh-CHS']);
-        this.translate.setDefaultLang('en');
-        const browserLang = this.translate.getBrowserLang();
-        this.translate.use(browserLang.match(/en|fr|ur|es|it|fa|de|zh-CHS/) ? browserLang : 'en');
+  ngOnInit() {
+    this.pushRightClass = 'push-right';
+    this.setUserName();
+    setInterval(() => {
+      this.checkToken();
+    }, 600000);
+  }
 
-        this.router.events.subscribe(val => {
-            if (
-                val instanceof NavigationEnd &&
-                window.innerWidth <= 992 &&
-                this.isToggled()
-            ) {
-                this.toggleSidebar();
-            }
-        });
+  private setUserName() {
+    this.user = this.userService.getUserStorage();
+  }
+
+  private checkToken() {
+    const user: User = this.userService.getUserStorage();
+    const expirationTime = new Date(new Date(user.expiration).toLocaleString());
+    const currentTime = new Date();
+    const refreshTime = new Date();
+    // logout after 20min inactivity
+    refreshTime.setMinutes(refreshTime.getMinutes() + 10);
+    if (currentTime > expirationTime) {
+      this.router.navigate(['/login']);
+    } else if (refreshTime > expirationTime) {
+      this.userService.refreshToken()
+        .subscribe(
+          data => {
+            user.token = data.token;
+            const expDate = new Date();
+            user.expiration = data.expiration;
+            this.userService.setToLocalStorage(user);
+          },
+          err => {
+            console.log(err);
+            this.router.navigate(['/login']);
+          });
     }
 
-    ngOnInit() {
-        this.pushRightClass = 'push-right';
-    }
+  }
 
-    isToggled(): boolean {
-        const dom: Element = document.querySelector('body');
-        return dom.classList.contains(this.pushRightClass);
-    }
+  convertUTCDateToLocalDate(date) {
+    const newDate = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
 
-    toggleSidebar() {
-        const dom: any = document.querySelector('body');
-        dom.classList.toggle(this.pushRightClass);
-    }
+    const offset = date.getTimezoneOffset() / 60;
+    const hours = date.getHours();
 
-    rltAndLtr() {
-        const dom: any = document.querySelector('body');
-        dom.classList.toggle('rtl');
-    }
+    newDate.setHours(hours - offset);
 
-    onLoggedout() {
-        localStorage.removeItem('isLoggedin');
-    }
+    return newDate;
+  }
 
-    changeLang(language: string) {
-        this.translate.use(language);
-    }
+  isToggled(): boolean {
+    const dom: Element = document.querySelector('body');
+    return dom.classList.contains(this.pushRightClass);
+  }
+
+  toggleSidebar() {
+    const dom: any = document.querySelector('body');
+    dom.classList.toggle(this.pushRightClass);
+  }
+
+  rltAndLtr() {
+    const dom: any = document.querySelector('body');
+    dom.classList.toggle('rtl');
+  }
+
+  onLoggedout() {
+    localStorage.removeItem('isLogged');
+  }
+
 }

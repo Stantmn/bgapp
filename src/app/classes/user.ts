@@ -10,5 +10,5 @@ export class User {
   status: string;
   submerchant: string;
   storeName: string;
-  isLogged: boolean;
+  isLogged: string;
 }

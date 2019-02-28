@@ -12,7 +12,7 @@
       <i class="fa fa-fw fa-product-hunt"></i>&nbsp;
       <span>{{ 'Products' }}</span>
     </a>
-    <div class="nested-menu">
+    <div class="nested-menu" *ngIf="user.role === 'admin'">
       <a class="list-group-item" (click)="addExpandClass('pages')">
         <i class="fa fa-plus"></i>&nbsp;
         <span>{{ 'Admin' }}</span>

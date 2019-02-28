@@ -3,7 +3,6 @@ import { User } from '../../classes/user';
 import { UserService } from '../../services/user.service';
 import { ModalComponent } from '../../shared/modules/modal/modal.component';
 import { routerTransition } from '../../router.animations';
-import { StoresList } from '../../classes/stores-list';
 import { StoreService } from '../../services/store.service';
 import { Store } from '../../classes/store';
 
@@ -38,11 +37,8 @@ export class UserComponent implements OnInit {
           this.storesList = response.stores;
         },
         error => {
-          this.modal.errorMessage(error.error)
-            .catch(err => {
-              this.modal.openMessage('Server Error', 'Can\'t get stores information', 0);
-              console.log(err);
-            });
+          this.modal.openMessage('Server Error', 'Can\'t get stores information', 0);
+          console.log(error);
         },
         () => {
           this.getUsers();
@@ -61,11 +57,8 @@ export class UserComponent implements OnInit {
           }
         },
         error => {
-          this.modal.errorMessage(error.error)
-            .catch(err => {
-              this.modal.openMessage('Server Error', 'Can\'t get stores information', 0);
-              console.log(err);
-            });
+          this.modal.openMessage('Server Error', 'Can\'t get users information', 0);
+          console.log(error);
         }
       );
   }
@@ -107,8 +100,6 @@ export class UserComponent implements OnInit {
       .subscribe(
         response => {
           this.user = response;
-          console.log(this.user);
-          console.log(this.statuses);
           this.showForm(!this.showFormFlag);
           this.getUsers();
         },

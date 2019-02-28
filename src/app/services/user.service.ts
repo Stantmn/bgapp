@@ -37,8 +37,12 @@ export class UserService {
     return this.http.put(Settings.API_ENDPOINT + '/users/', user);
   }
 
-  login(login: Login): Observable<any> {
-    return this.http.post<any>(Settings.API_ENDPOINT + '/users/login', login);
+  login(login: Login): Observable<User> {
+    return this.http.post<User>(Settings.API_ENDPOINT + '/users/login', login);
+  }
+
+  refreshToken(): Observable<User> {
+    return this.http.post<User>(Settings.API_ENDPOINT + '/users/refresh', {});
   }
 
   getToken(): string {
@@ -50,6 +54,8 @@ export class UserService {
     user.email = localStorage.getItem('email');
     user.token = localStorage.getItem('token');
     user.expiration = localStorage.getItem('expiration');
+    user.role = localStorage.getItem('role');
+    user.isLogged = localStorage.getItem('isLogged');
     return user;
   }
 
@@ -57,6 +63,7 @@ export class UserService {
     localStorage.setItem('email', user.email);
     localStorage.setItem('token', user.token);
     localStorage.setItem('expiration', user.expiration);
+    localStorage.setItem('role', user.role);
     localStorage.setItem('isLogged', 'true');
   }
 

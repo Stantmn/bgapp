@@ -13,24 +13,12 @@ import { TokenInterceptor } from './services/interceptor.service';
 import { LoaderService } from './shared/services/loader.service';
 import { UserService } from './services/user.service';
 
-// AoT requires an exported function for factories
-export const createTranslateLoader = (http: HttpClient) => {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-};
-
 @NgModule({
   imports: [
     CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: createTranslateLoader,
-        deps: [HttpClient]
-      }
-    }),
     ModalModule,
     AppRoutingModule
   ],
