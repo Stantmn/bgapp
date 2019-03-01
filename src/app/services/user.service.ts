@@ -17,8 +17,8 @@ export class UserService {
   constructor(private http: HttpClient) {
   }
 
-  getUsers(tableParams: any): Observable<UsersList> {
-    return this.http.get<UsersList>(Settings.API_ENDPOINT + '/users/', {params: tableParams});
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(Settings.API_ENDPOINT + '/users/');
   }
 
   getUser(_id: string): Observable<User> {

@@ -17,10 +17,8 @@ export class UserComponent implements OnInit {
   public usersList: User[] = [];
   public user = new User;
   public storesList: Store[];
-  public errorMessage: any;
   public roles = ['admin', 'user'];
   public statuses = ['enabled', 'disabled'];
-  private tableParams = {};
   public showFormFlag = false;
 
   constructor(private userService: UserService, private storeService: StoreService, private modal: ModalComponent) {
@@ -34,7 +32,7 @@ export class UserComponent implements OnInit {
     this.storeService.getStores()
       .subscribe(
         response => {
-          this.storesList = response.stores;
+          this.storesList = response;
         },
         error => {
           this.modal.openMessage('Server Error', 'Can\'t get stores information', 0);
@@ -47,10 +45,10 @@ export class UserComponent implements OnInit {
   }
 
   getUsers(): void {
-    this.userService.getUsers(this.tableParams)
+    this.userService.getUsers()
       .subscribe(
         response => {
-          this.usersList = response.users;
+          this.usersList = response;
           for (let i = 0; i < this.usersList.length; i++) {
             const k = this.storesList.map(e => e._id).indexOf(this.usersList[i].submerchant);
             this.usersList[i].storeName = this.storesList[k].storeName;

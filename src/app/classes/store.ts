@@ -1,5 +1,6 @@
 export class Store {
   _id: string;
+  status: string;
   storeName: string;
   differentFulfillment: boolean;
   fulfillmentService: boolean;

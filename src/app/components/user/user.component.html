@@ -33,7 +33,7 @@
           </select>
         </fieldset>
 
-        <fieldset class="form-group">
+        <fieldset class="form-group align-middle">
           <label>Status *</label>
           <select class="form-control" [(ngModel)]="user.status" name="status" required>
             <option *ngFor="let item of statuses" [ngValue]="item">{{ item }}
@@ -43,7 +43,7 @@
 
         <fieldset class="form-group">
           <label>Store *</label>
-          <select class="form-control" [(ngModel)]="user.submerchant" name="status" required>
+          <select class="form-control" [(ngModel)]="user.submerchant" name="submerchant" required>
             <option *ngFor="let item of storesList" [ngValue]="item._id">{{ item.storeName }}
             </option>
           </select>
