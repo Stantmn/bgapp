@@ -11,31 +11,34 @@ export class StoreService {
   }
 
   getStores(): Observable<Store[]> {
-    return this.http.get<Store[]>(Settings.API_ENDPOINT + '/stores');
+    return this.http.get<Store[]>(Settings.API_ENDPOINT + '/stores/store/');
   }
 
   getStore(_id: string): Observable<Store> {
-    return this.http.get<Store>(Settings.API_ENDPOINT + '/stores/' + _id);
+    return this.http.get<Store>(Settings.API_ENDPOINT + '/stores/store/' + _id);
   }
 
   deleteStore(_id: string): Observable<any> {
-    return this.http.delete<any>(Settings.API_ENDPOINT + '/stores/' + _id);
+    return this.http.delete<any>(Settings.API_ENDPOINT + '/stores/store/' + _id);
   }
 
   addStore(store: Store): Observable<Store> {
-    return this.http.post<Store>(Settings.API_ENDPOINT + '/stores/', store);
+    return this.http.post<Store>(Settings.API_ENDPOINT + '/stores/store/', store);
   }
 
   updateStore(store: Store) {
-    return this.http.put(Settings.API_ENDPOINT + '/stores/', store);
+    return this.http.put(Settings.API_ENDPOINT + '/stores/store/', store);
   }
 
   getLocations(_id: string): Observable<any> {
-    return this.http.get<any>(Settings.API_ENDPOINT + '/stores/locations/' + _id);
+    return this.http.get<any>(Settings.API_ENDPOINT + '/stores/store/locations/' + _id);
   }
 
   getWebhooks(_id: string): Observable<any> {
-    return this.http.get<any>(Settings.API_ENDPOINT + '/stores/webhooks/' + _id);
+    return this.http.get<any>(Settings.API_ENDPOINT + '/stores/store/webhooks/' + _id);
   }
 
+  setWebhooks(_id: string): Observable<any> {
+    return this.http.post<any>(Settings.API_ENDPOINT + '/stores/store/webhooks/' + _id, {});
+  }
 }

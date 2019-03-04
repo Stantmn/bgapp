@@ -135,6 +135,19 @@ export class StoreComponent implements OnInit {
       );
   }
 
+  installService(_id: string): void {
+    this.storeService.setWebhooks(_id)
+      .subscribe(
+        () => {
+          this.modal.openMessage('Installation', 'Services and webhooks were installed', 0);
+        },
+        error => {
+          this.modal.openMessage('Server Error', 'Can\'t get the webhooks', 0);
+          console.log(error);
+        }
+      );
+  }
+
   storeCancel(): void {
     this.store = new Store();
     this.showFormFlag = false;
