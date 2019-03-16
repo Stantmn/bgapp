@@ -11,7 +11,7 @@ export class OrderService {
   }
 
   getOrders(page: number = 1): Observable<Order[]> {
-    return this.http.get<Order[]>(Settings.API_ENDPOINT + '/orders/order/list');
+    return this.http.get<Order[]>(Settings.API_ENDPOINT + `/orders/order/list/?page=${page}`);
   }
 
 }
