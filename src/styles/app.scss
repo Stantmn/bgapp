@@ -4,11 +4,17 @@
 @import "utils";
 @import "rtl";
 @import "responsive";
+@import "~ag-grid-community/dist/styles/ag-grid.css";
+@import "~ag-grid-community/dist/styles/ag-theme-bootstrap.css";
 
 @media print {
     .breadcrumb {
         display: none !important;
     }
+}
+
+html {
+  font-size: 14px
 }
 
 .help-block {
@@ -19,3 +25,4 @@
 .button_space {
   padding: 10px 10px 10px 20px;
 }
+

@@ -29,7 +29,7 @@ export class OrderComponent implements OnInit {
           this.ordersList = response;
         },
         error => {
-          this.modal.openMessage('Server Error', 'Can\'t get the Store', 0);
+          this.modal.openMessage('Server Error', 'Can\'t get the Orders', 0);
           console.log(error);
         }
       );
