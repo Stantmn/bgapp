@@ -1,9 +1,11 @@
+import { Category } from './category';
+
 export class Product {
   _id: string;
   productId: number;
   sku: string;
   description: string;
-  category: any;
+  category: Category;
   countryOfManufacture: string;
   hsCode: string;
   categoryName: string;

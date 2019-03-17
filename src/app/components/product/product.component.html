@@ -3,14 +3,49 @@
     <div class="card mb-3">
       <div class="card-header">Products</div>
       <div class="card-block table-responsive">
-        <ag-grid-angular
+        <div class="button_space">
+          <form>
+            <div class="form-group form-inline ">
+              Search: <input class="form-control ml-2" name="filter" [(ngModel)]="filter" (keyup)="search()"/>
+            </div>
+          </form>
+        </div>
+        <table class="table table-striped">
+          <thead class="thead-inverse">
+          <tr>
+            <th scope="col" sortable="productId" (sort)="onSort($event)" style="cursor: pointer;">ID</th>
+            <th scope="col" sortable="sku" (sort)="onSort($event)" style="cursor: pointer;">SKU</th>
+            <th>Description</th>
+            <th scope="col" sortable="countryOfManufacture" (sort)="onSort($event)" style="cursor: pointer;">Country</th>
+            <th>HS Code</th>
+            <th scope="col" sortable="categoryName" (sort)="onSort($event)" style="cursor: pointer;">Category</th>
+            <th scope="col" sortable="created" (sort)="onSort($event)" style="cursor: pointer;">Created</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let product of _productsList;">
+            <td>{{product.productId}}</td>
+            <td>{{product.sku}}</td>
+            <td>{{product.description}}</td>
+            <td>{{product.countryOfManufacture}}</td>
+            <td>{{product.hsCode}}</td>
+            <td>{{product.categoryName}}</td>
+            <td>{{product.created | date:'MM/dd/yyyy'}}</td>
+          </tr>
+          </tbody>
+        </table>
 
-          class="ag-theme-bootstrap"
-          [rowData]="rowData"
-          [columnDefs]="columnDefs"
-          pagination="true"
-        >
-        </ag-grid-angular>
+        <div class="d-flex justify-content-between p-2">
+          <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="changePage($event)">
+          </ngb-pagination>
+
+          <select class="custom-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="getPage()">
+            <option [ngValue]="25">25 items per page</option>
+            <option [ngValue]="50">50 items per page</option>
+            <option [ngValue]="100">100 items per page</option>
+          </select>
+        </div>
+
       </div>
     </div>
   </div>
