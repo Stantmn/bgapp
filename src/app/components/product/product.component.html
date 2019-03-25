@@ -20,18 +20,12 @@
             <th>HS Code</th>
             <th scope="col" sortable="categoryName" (sort)="onSort($event)" style="cursor: pointer;">Category</th>
             <th scope="col" sortable="created" (sort)="onSort($event)" style="cursor: pointer;">Created</th>
+            <th colspan="2">Action</th>
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let product of _productsList;">
-            <td>{{product.productId}}</td>
-            <td>{{product.sku}}</td>
-            <td>{{product.description}}</td>
-            <td>{{product.countryOfManufacture}}</td>
-            <td>{{product.hsCode}}</td>
-            <td>{{product.categoryName}}</td>
-            <td>{{product.created | date:'MM/dd/yyyy'}}</td>
-          </tr>
+            <tr *ngFor="let product of _productsList;" (click)="editRow(product._id)"
+               [categoryList]="categoryList" [product]="product" [edit]="editForm" inline-product></tr>
           </tbody>
         </table>
 

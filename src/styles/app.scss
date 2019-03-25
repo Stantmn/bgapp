@@ -26,3 +26,16 @@ html {
   padding: 10px 10px 10px 20px;
 }
 
+.maxwidth {
+  max-width:250px;
+}
+
+.maxwidth > option {
+  max-width:250px;
+  background: #000;
+  color: #fff;
+}
+
+.maxwidth > option:hover {
+  background:red;
+}

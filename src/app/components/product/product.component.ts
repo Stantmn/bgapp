@@ -1,14 +1,17 @@
-import { Component, Directive, EventEmitter, Input, OnInit, Output, PipeTransform, QueryList, ViewChildren } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  QueryList,
+  ViewChildren
+} from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { UserService } from '../../services/user.service';
 import { ModalComponent } from '../../shared/modules/modal/modal.component';
 import { Product } from '../../classes/product';
 import { Category } from '../../classes/category';
-import { Countries } from '../../constants/constants';
 import { NgbdSortableHeader } from '../../shared/directives/sortable.directive';
 import { DecimalPipe } from '@angular/common';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 export type SortDirection = 'asc' | 'desc' | '';
 export const compare = (v1, v2) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
@@ -18,14 +21,13 @@ export interface SortEvent {
   direction: SortDirection;
 }
 
-
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss'],
   providers: [ProductService, DecimalPipe]
 })
-export class ProductComponent implements OnInit {
+export class ProductComponent implements OnDestroy {
   public productsList: Product[];
   public _productsList: Product[];
   public product: Product;
@@ -34,7 +36,8 @@ export class ProductComponent implements OnInit {
   public page = 1;
   public pageSize = 25;
   public collectionSize: number;
-
+  public subscriptionProducts: Subscription;
+  public editForm = false;
 
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
@@ -43,11 +46,19 @@ export class ProductComponent implements OnInit {
     private userService: UserService,
     private modal: ModalComponent,
   ) {
-  }
-
-  ngOnInit() {
     this.getProducts();
     this.getCategories();
+    this.subscriptionProducts = this.productService.productsList$
+      .subscribe(products => {
+        this.productsList = products;
+        this.collectionSize = this.productsList.length;
+        this.getPage();
+        console.log(this.productsList);
+      });
+  }
+
+  ngOnDestroy() {
+    this.subscriptionProducts.unsubscribe();
   }
 
   onSort({column, direction}: SortEvent) {
@@ -71,21 +82,12 @@ export class ProductComponent implements OnInit {
 
   getProducts(): void {
     this.productService.getProducts()
-      .pipe(map(products => {
-        return products.map((product: Product) => {
-          if (product.category) {
-            product.categoryName = `${product.category.categoryName} \\ ${product.category.subcategoryName} \\ ${product.category.subcategoryName2}`;
-            product.hsCode = product.category.hsCode;
-          }
-          return product;
-        });
-      }))
       .subscribe(
         response => {
-          this.productsList = response;
-          this._productsList = this.productsList;
-          this.collectionSize = this._productsList.length;
-          this.getPage();
+          // this.productsList = response;
+          // this._productsList = this.productsList;
+          // this.collectionSize = this._productsList.length;
+          // this.getPage();
         },
         error => {
           this.modal.openMessage('Server Error', 'Can\'t get the Products list', 0);
@@ -93,6 +95,10 @@ export class ProductComponent implements OnInit {
         }
       );
   }
+
+  editRow(id: string): void {
+  }
+
 
   getPage(): void {
     this._productsList = this.productsList
