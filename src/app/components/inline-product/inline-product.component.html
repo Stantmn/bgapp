@@ -1,0 +1,34 @@
+  <td *ngIf="!edit">{{_product.productId}}</td>
+  <td *ngIf="edit"><input ngModel="{{_product.productId}}" size="13" name="productId"></td>
+  <td *ngIf="!edit">{{_product.sku}}</td>
+  <td *ngIf="edit"><input ngModel="{{_product.sku}}" size="8" name="sku"></td>
+  <td *ngIf="!edit">{{_product.description}}</td>
+  <td *ngIf="edit">
+    <input ngModel="{{_product.description}}" name="description">
+  </td>
+  <td *ngIf="!edit">{{_product.countryOfManufacture}}</td>
+  <td *ngIf="edit">
+    <select class="form-control" [(ngModel)]="_product.countryOfManufacture" name="countryOfManufacture">
+      <option *ngFor="let country of countries | keyvalue" [ngValue]="country.key">{{ country.value }}
+      </option>
+    </select>
+  </td>
+  <td *ngIf="!edit">{{_product.hsCode}}</td>
+  <td *ngIf="edit"><input ngModel="{{_product.hsCode}}" name="hsCode" size="12"></td>
+  <td *ngIf="!edit">{{_product.categoryName}}</td>
+  <td *ngIf="edit">
+    <select ngModel="{{_product.category}}" class="maxwidth">
+      <option *ngFor="let category of categoryList" [ngValue]="category.category">
+        {{category.categoryName}}\{{category.subcategoryName}}\{{category.subcategoryName2}}
+      </option>
+    </select>
+  </td>
+  <td>{{product.created | date:'MM/dd/yyyy'}}</td>
+  <td>
+    <button *ngIf="!edit" class="btn btn-success" (click)="editRow()">Edit</button>
+    <button *ngIf="edit" class="btn btn-success">Save</button>
+  </td>
+  <td>
+    <button *ngIf="!edit" class="btn btn-danger">Delete</button>
+    <button *ngIf="edit" class="btn btn-danger">Cancel</button>
+  </td>
