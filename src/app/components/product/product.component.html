@@ -5,8 +5,13 @@
       <div class="card-block table-responsive">
         <div class="button_space">
           <form>
-            <div class="form-group form-inline ">
-              Search: <input class="form-control ml-2" name="filter" [(ngModel)]="filter" (keyup)="search()"/>
+            <div class="row">
+              <div class="col form-group form-inline">
+                Search: <input class="form-control ml-2" name="filter" [(ngModel)]="filter" (keyup)="search()"/>
+              </div>
+              <div class="col">
+                <button class="btn btn-danger" (click)="refreshProducts()">Reload product</button>
+              </div>
             </div>
           </form>
         </div>
@@ -24,7 +29,7 @@
           </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let product of _productsList;" (click)="editRow(product._id)"
+            <tr *ngFor="let product of _productsList;"
                [categoryList]="categoryList" [product]="product" [edit]="editForm" inline-product></tr>
           </tbody>
         </table>

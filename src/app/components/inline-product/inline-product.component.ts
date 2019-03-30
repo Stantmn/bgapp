@@ -35,7 +35,6 @@ export class InlineProductComponent implements OnInit {
   }
 
   saveProduct(): void {
-    console.log(this._product);
     this.productService.updateProduct(this._product)
       .subscribe(
         () => {

@@ -85,13 +85,31 @@ export class ProductComponent implements OnDestroy {
         () => {
         },
         error => {
-          this.modal.openMessage('Server Error', 'Can\'t get the Products list', 0);
+          this.modal.openMessage('Server Error', error.error ? error.error.error : 'Can\'t get a list of products', 0);
           console.log(error);
         }
       );
   }
 
-  editRow(id: string): void {
+  refreshProducts(): void {
+    this.modal.openMessage('Reload all products?', 'Reload it means you will loose categories, HS codes and countries', 1)
+      .then(result => {
+        if (result) {
+          this.productService.refreshProducts()
+            .subscribe(
+              () => {
+                this.getProducts();
+              },
+              error => {
+                this.modal.openMessage('Server Error', error.error ? error.error.error : 'Can\'t load a list of products', 0);
+                console.log(error);
+              }
+            );
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
 
@@ -126,7 +144,7 @@ export class ProductComponent implements OnDestroy {
           this.categoryList = response;
         },
         error => {
-          this.modal.openMessage('Server Error', 'Can\'t get the Products list', 0);
+          this.modal.openMessage('Server Error', error.error ? error.error.error : 'Can\'t get the categories list', 0);
           console.log(error);
         }
       );

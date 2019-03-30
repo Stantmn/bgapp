@@ -5,11 +5,9 @@ import { Observable, Subject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Product } from '../classes/product';
 import { Category } from '../classes/category';
-import { Store } from '../classes/store';
 
 @Injectable()
 export class ProductService {
-  public categoryList: Category[];
   public productsList: Product[];
   private productsListSource = new Subject<Product[]>();
   public productsList$ = this.productsListSource.asObservable();
@@ -21,9 +19,11 @@ export class ProductService {
     return this.http.get<Product[]>(Settings.API_ENDPOINT + `/products/product/list/`)
       .pipe(map(products => {
           return products.map((product: Product) => {
-            if (product.category) {
+            if (!!product.category) {
               product.categoryName = `${product.category.categoryName} \\ ${product.category.subcategoryName} \\ ${product.category.subcategoryName2}`;
               product.hsCode = product.category.hsCode;
+            } else {
+              product.category = new Category();
             }
             return product;
           });
@@ -72,7 +72,7 @@ export class ProductService {
       );
   }
 
-  refreshProducts(): void {
-    this.productsListSource.next(this.productsList);
+  refreshProducts() {
+    return this.http.post(Settings.API_ENDPOINT + '/products/refresh/', {});
   }
 }
