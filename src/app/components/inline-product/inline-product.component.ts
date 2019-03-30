@@ -16,21 +16,75 @@ export class InlineProductComponent implements OnInit {
   @Input() edit: boolean;
   @Input() categoryList: Category[];
   public _product: Product;
-  // public categoryList: Category[];
   public countries: any;
 
   constructor(
     private productService: ProductService,
-    private modal: ModalComponent,
+    private modal: ModalComponent
   ) {
     this.countries = Countries;
+    this._product = new Product();
   }
 
   ngOnInit() {
-    this._product = this.product;
+    this._product = Object.assign(this.product);
   }
 
   editRow(): void {
+    this.edit = !this.edit;
+  }
+
+  saveProduct(): void {
+    console.log(this._product);
+    this.productService.updateProduct(this._product)
+      .subscribe(
+        () => {
+          this.getProduct(this._product._id);
+        },
+        error => {
+          this.modal.openMessage('Server Error', error.error ? error.error.error : 'Can\'t save the product information', 0);
+          console.log(error);
+        },
+        () => {
+          this.editRow();
+        }
+      );
+  }
+
+  addProduct(): void {
+    console.log(this._product);
+    this.productService.addProduct(this._product)
+      .subscribe(
+        () => {
+        },
+        error => {
+          this.modal.openMessage('Server Error', error.error ? error.error.error : 'Can\'t save the product information', 0);
+          console.log(error);
+        },
+        () => {
+          this.editRow();
+          this.product = Object.assign(this._product);
+        }
+      );
+  }
+
+  getProduct(_id: string): void {
+    this.productService.getProduct(_id)
+      .subscribe(
+        response => {
+          this.product = response;
+          this._product = response;
+        },
+        error => {
+          this.modal.openMessage('Server Error', error.error ? error.error.error : 'Can\'t get the product information', 0);
+          console.log(error);
+        }
+      );
+  }
+
+  cancel(): void {
+    console.log(this.product);
+    this._product = Object.assign(this.product);
     this.edit = !this.edit;
   }
 }

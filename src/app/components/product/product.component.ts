@@ -53,7 +53,6 @@ export class ProductComponent implements OnDestroy {
         this.productsList = products;
         this.collectionSize = this.productsList.length;
         this.getPage();
-        console.log(this.productsList);
       });
   }
 
@@ -83,11 +82,7 @@ export class ProductComponent implements OnDestroy {
   getProducts(): void {
     this.productService.getProducts()
       .subscribe(
-        response => {
-          // this.productsList = response;
-          // this._productsList = this.productsList;
-          // this.collectionSize = this._productsList.length;
-          // this.getPage();
+        () => {
         },
         error => {
           this.modal.openMessage('Server Error', 'Can\'t get the Products list', 0);

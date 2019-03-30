@@ -4,12 +4,13 @@ import { CommonModule } from '@angular/common';
 import { ProductRoutingModule } from './product-routing.module';
 import { ProductComponent } from './product.component';
 import { NgbdSortableHeader } from '../../shared/directives/sortable.directive';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { InlineProductComponent } from '../inline-product/inline-product.component';
 
 @NgModule({
-    imports: [CommonModule, ProductRoutingModule, FormsModule, NgbModule],
+    imports: [CommonModule, ProductRoutingModule, FormsModule, NgbModule, NgSelectModule],
     declarations: [ProductComponent, NgbdSortableHeader, InlineProductComponent]
 })
 export class ProductModule {}

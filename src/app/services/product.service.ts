@@ -5,6 +5,7 @@ import { Observable, Subject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Product } from '../classes/product';
 import { Category } from '../classes/category';
+import { Store } from '../classes/store';
 
 @Injectable()
 export class ProductService {
@@ -34,9 +35,41 @@ export class ProductService {
       );
   }
 
+  getProduct(_id: string): Observable<Product> {
+    return this.http.get<Product>(Settings.API_ENDPOINT + '/products/product/' + _id)
+      .pipe(
+        map(product => {
+          if (product.category) {
+            product.categoryName = `${product.category.categoryName} \\ ${product.category.subcategoryName} \\ ${product.category.subcategoryName2}`;
+            product.hsCode = product.category.hsCode;
+          }
+          return product;
+        })
+      );
+  }
+
+  deleteProduct(_id: string): Observable<any> {
+    return this.http.delete<any>(Settings.API_ENDPOINT + '/products/product/' + _id);
+  }
+
+  addProduct(product: Product): Observable<Product> {
+    return this.http.post<Product>(Settings.API_ENDPOINT + '/products/product/', product);
+  }
+
+  updateProduct(product: Product) {
+    return this.http.put(Settings.API_ENDPOINT + '/products/product/', product);
+  }
+
   getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(Settings.API_ENDPOINT + `/categories/category/list/`)
-      .pipe(tap(categories => this.categoryList = categories));
+      .pipe(
+        map(categories => {
+          return categories.map(category => {
+            category.fullName = `${category.categoryName} \\ ${category.subcategoryName} \\ ${category.subcategoryName2}`;
+            return category;
+          });
+        })
+      );
   }
 
   refreshProducts(): void {
