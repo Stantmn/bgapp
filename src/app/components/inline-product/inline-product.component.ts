@@ -82,7 +82,6 @@ export class InlineProductComponent implements OnInit {
   }
 
   cancel(): void {
-    console.log(this.product);
     this._product = Object.assign(this.product);
     this.edit = !this.edit;
   }

@@ -9,5 +9,6 @@ export class Product {
   countryOfManufacture: string;
   hsCode: string;
   categoryName: string;
+  publishedStatus: boolean;
   created: string;
 }
