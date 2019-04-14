@@ -102,6 +102,10 @@ export class ProductComponent implements OnDestroy {
       });
   }
 
+  deleteProduct(deleted: boolean): void {
+    this.getProducts();
+  }
+
   onSort({column, direction}: SortEvent) {
     this.filterList();
     // resetting other headers

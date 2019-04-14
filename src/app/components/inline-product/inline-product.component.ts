@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Product } from '../../classes/product';
 import { ProductService } from '../../services/product.service';
 import { Category } from '../../classes/category';
@@ -15,6 +15,7 @@ export class InlineProductComponent implements OnInit {
   @Input() product: Product;
   @Input() edit: boolean;
   @Input() categoryList: Category[];
+  @Output() deleted = new EventEmitter<boolean>();
   public _product: Product;
   public countries: any;
 
@@ -48,6 +49,28 @@ export class InlineProductComponent implements OnInit {
           this.editRow();
         }
       );
+  }
+
+  deleteProduct(): void {
+    this.modal.openMessage('Do you want to delete this products?', 'You can\' restore this product again', 1)
+      .then(result => {
+        if (result) {
+          this.productService.deleteProduct(this._product._id)
+            .subscribe(
+              () => {
+                this.deleted.emit(true);
+              },
+              error => {
+                this.modal.openMessage('Server Error', error.error ? error.error.error : 'Can\'t delete the product', 0);
+                console.log(error);
+              },
+            );
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
   }
 
   addProduct(): void {

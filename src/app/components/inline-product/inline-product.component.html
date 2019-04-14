@@ -17,7 +17,7 @@
   <td *ngIf="edit"><input [(ngModel)]="_product.category.hsCode" name="hsCode" size="12"></td>
   <td *ngIf="!edit" (dblclick)="editRow()">{{_product.categoryName}}</td>
   <td *ngIf="edit">
-    <ng-select [items]="categoryList"
+    <ng-select [items]="categoryList" *ngIf="categoryList"
                bindLabel="fullName"
                bindValue="_id"
                [(ngModel)]="_product.category._id">
@@ -31,6 +31,6 @@
     >Save</button>
   </td>
   <td>
-    <button *ngIf="!edit" class="btn btn-danger">Delete</button>
+    <button *ngIf="!edit" class="btn btn-danger" (click)="deleteProduct()">Delete</button>
     <button *ngIf="edit" class="btn btn-danger" (click)="cancel()">Cancel</button>
   </td>

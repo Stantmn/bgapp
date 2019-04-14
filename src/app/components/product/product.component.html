@@ -143,7 +143,10 @@
           </thead>
           <tbody>
           <tr *ngFor="let product of _productsList;"
-              [categoryList]="categoryList" [product]="product" [edit]="editForm" inline-product></tr>
+              [categoryList]="categoryList" [product]="product" [edit]="editForm" (deleted)="deleteProduct($event)"
+              inline-product>
+
+          </tr>
           </tbody>
         </table>
 
