@@ -83,7 +83,7 @@
                           (pageChange)="changePage($event)">
           </ngb-pagination>
 
-          <select class="custom-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="getPage()">
+          <select class="custom-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="filterList()">
             <option [ngValue]="25">25 items per page</option>
             <option [ngValue]="50">50 items per page</option>
             <option [ngValue]="100">100 items per page</option>
