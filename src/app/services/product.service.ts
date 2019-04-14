@@ -8,6 +8,7 @@ import { Category } from '../classes/category';
 
 @Injectable()
 export class ProductService {
+  public categoryList: Category[];
   public productsList: Product[];
   private productsListSource = new Subject<Product[]>();
   public productsList$ = this.productsListSource.asObservable();
@@ -68,7 +69,8 @@ export class ProductService {
             category.fullName = `${category.categoryName} \\ ${category.subcategoryName} \\ ${category.subcategoryName2}`;
             return category;
           });
-        })
+        }),
+        tap(categories => this.categoryList = categories)
       );
   }
 

@@ -9,9 +9,11 @@ import { UserService } from '../../services/user.service';
 import { ModalComponent } from '../../shared/modules/modal/modal.component';
 import { Product } from '../../classes/product';
 import { Category } from '../../classes/category';
+import { Countries } from '../../constants/constants';
 import { NgbdSortableHeader } from '../../shared/directives/sortable.directive';
 import { DecimalPipe } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { routerTransition } from '../../router.animations';
 
 export type SortDirection = 'asc' | 'desc' | '';
 export const compare = (v1, v2) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
@@ -41,6 +43,8 @@ export class ProductComponent implements OnDestroy {
   public publishedStatus: boolean = null;
   public dateFrom: {};
   public dateTo: {};
+  public showFormFlag = false;
+  public countries: any;
 
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
@@ -49,6 +53,8 @@ export class ProductComponent implements OnDestroy {
     private userService: UserService,
     private modal: ModalComponent,
   ) {
+    this.productCancel();
+    this.countries = Countries;
     this.getProducts();
     this.getCategories();
     this.subscriptionProducts = this.productService.productsList$
@@ -176,7 +182,7 @@ export class ProductComponent implements OnDestroy {
           || (product.productId).toString().includes(term)
           || (!!product.sku ? product.sku.toLowerCase().includes(term) : false)
           || (!!product.countryOfManufacture ? product.countryOfManufacture.toLowerCase().includes(term) : false)
-          || (!!product.hsCode ? product.hsCode.toLowerCase().includes(term): false)
+          || (!!product.hsCode ? product.hsCode.toLowerCase().includes(term) : false)
           || (!!product.categoryName ? product.categoryName.toLowerCase().includes(term) : false)
           || (product.description).includes(term);
       });
@@ -195,5 +201,32 @@ export class ProductComponent implements OnDestroy {
         }
       );
   }
+
+  productSave(): void {
+    this.productService.addProduct(this.product)
+      .subscribe(
+        response => {
+        },
+        error => {
+          this.modal.openMessage('Server Error', error.error ? error.error.error : 'Can\'t save the product information', 0);
+          console.log(error);
+        },
+        () => {
+          this.getProducts();
+          this.productCancel();
+        }
+      );
+  }
+
+  productCancel(): void {
+    this.product = new Product();
+    this.product.category = new Category();
+    this.showFormFlag = false;
+  }
+
+  showForm(flag: boolean): void {
+    this.showFormFlag = flag;
+  }
+
 }
 

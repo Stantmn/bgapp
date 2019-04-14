@@ -8,9 +8,11 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { InlineProductComponent } from '../inline-product/inline-product.component';
+import { PageHeaderModule } from '../../shared/modules';
 
 @NgModule({
-    imports: [CommonModule, ProductRoutingModule, FormsModule, NgbModule, NgSelectModule],
-    declarations: [ProductComponent, NgbdSortableHeader, InlineProductComponent]
+  imports: [CommonModule, ProductRoutingModule, FormsModule, NgbModule, NgSelectModule, PageHeaderModule],
+  declarations: [ProductComponent, NgbdSortableHeader, InlineProductComponent]
 })
-export class ProductModule {}
+export class ProductModule {
+}
