@@ -7,9 +7,15 @@
       <form #productForm="ngForm">
 
         <fieldset class="form-group">
-          <label>ID *</label>
+          <label>Product ID *</label>
           <input class="form-control" [(ngModel)]="product.productId" name="productId" type="text"
                  id="productId" placeholder="Enter a Shopify ID" required>
+        </fieldset>
+
+        <fieldset class="form-group">
+          <label>Variant ID *</label>
+          <input class="form-control" [(ngModel)]="product.variantId" name="variantId" type="text"
+                 id="variantId" placeholder="Enter a Shopify Variant ID" required>
         </fieldset>
 
         <fieldset class="form-group">
@@ -66,10 +72,14 @@
 
 <div class="row">
   <div class="col-md-2">
-    <button class="btn btn-warning" (click)="showForm(!showFormFlag)" *ngIf="!showFormFlag">New product</button>
+    <button class="btn btn-success" (click)="showForm(!showFormFlag)" *ngIf="!showFormFlag">New product</button>
   </div>
   <div class="col-md-2">
-    <button class="btn btn-danger" (click)="refreshProducts()" *ngIf="!showFormFlag">Reload all products</button>
+    <button class="btn btn-warning" (click)="exportProductsToXLS()"
+            *ngIf="!!productsList && productsList.length && !showFormFlag">Export to XLS</button>
+  </div>
+  <div class="col-md-2">
+    <button class="btn btn-danger" (click)="refreshProducts()" *ngIf="!showFormFlag">Reload from Shopify</button>
   </div>
   <div class="col-md-8"></div>
 </div>
@@ -128,7 +138,8 @@
         <table class="table table-striped">
           <thead class="thead-inverse">
           <tr>
-            <th scope="col" sortable="productId" (sort)="onSort($event)" style="cursor: pointer;">ID</th>
+            <th scope="col" sortable="productId" (sort)="onSort($event)" style="cursor: pointer;">Product ID</th>
+            <th scope="col" sortable="variantId" (sort)="onSort($event)" style="cursor: pointer;">Variant ID</th>
             <th scope="col" sortable="sku" (sort)="onSort($event)" style="cursor: pointer;">SKU</th>
             <th>Description</th>
             <th scope="col" sortable="countryOfManufacture" (sort)="onSort($event)" style="cursor: pointer;">Country

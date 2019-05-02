@@ -1,5 +1,7 @@
   <td *ngIf="!edit" (dblclick)="editRow()">{{_product.productId}}</td>
   <td *ngIf="edit"><input [(ngModel)]="_product.productId" size="13" name="productId"></td>
+  <td *ngIf="!edit" (dblclick)="editRow()">{{_product.variantId}}</td>
+  <td *ngIf="edit"><input [(ngModel)]="_product.variantId" size="15" name="variantId"></td>
   <td *ngIf="!edit" (dblclick)="editRow()">{{_product?.sku}}</td>
   <td *ngIf="edit"><input [(ngModel)]="_product.sku" size="8" name="sku"></td>
   <td *ngIf="!edit" (dblclick)="editRow()">{{_product?.description}}</td>
@@ -27,7 +29,7 @@
   <td>
     <button *ngIf="!edit" class="btn btn-success" (click)="editRow()">Edit</button>
     <button *ngIf="edit" class="btn btn-success" (click)="saveProduct()"
-            [disabled]="!(_product.productId && _product.sku && _product.description && _product.countryOfManufacture) && (_product.category._id || _product.category.hsCode)"
+            [disabled]="!(_product.productId && _product.variantId && _product.sku && _product.description && _product.countryOfManufacture) && (_product.category._id || _product.category.hsCode)"
     >Save</button>
   </td>
   <td>

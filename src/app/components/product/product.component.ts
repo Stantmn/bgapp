@@ -13,7 +13,7 @@ import { Countries } from '../../constants/constants';
 import { NgbdSortableHeader } from '../../shared/directives/sortable.directive';
 import { DecimalPipe } from '@angular/common';
 import { Subscription } from 'rxjs';
-import { routerTransition } from '../../router.animations';
+import * as XLSX from 'xlsx';
 
 export type SortDirection = 'asc' | 'desc' | '';
 export const compare = (v1, v2) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
@@ -32,6 +32,7 @@ export interface SortEvent {
 export class ProductComponent implements OnDestroy {
   public productsList: Product[];
   public _productsList: Product[];
+  private productsListForXLS: {};
   public product: Product;
   public categoryList: Category[];
   public filter: string;
@@ -82,6 +83,36 @@ export class ProductComponent implements OnDestroy {
       );
   }
 
+  convertProductListToXLS(): any {
+    return this.productsListForXLS = this.productsList.map(product => {
+      const xlsRow = {};
+      xlsRow['Product ID'] = product.productId;
+      xlsRow['Variant ID'] = product.variantId;
+      xlsRow['Barcode'] = product.barcode;
+      xlsRow['SKU'] = product.sku;
+      xlsRow['Country of Origin'] = product.countryOfManufacture;
+      xlsRow['HS Code'] = product.hsCode;
+      xlsRow['Weight'] = product.weight;
+      xlsRow['Weight Unit'] = product.weightUnit;
+      xlsRow['Created'] = product.created;
+      xlsRow['Updated'] = product.updated;
+      xlsRow['Published'] = product.published;
+      xlsRow['Description'] = product.description;
+      xlsRow['Categorization'] = product.productType;
+      xlsRow['Collection ID'] = product.collectionId;
+      xlsRow['Declared Value'] = product.declaredValue;
+      return xlsRow;
+    });
+  }
+
+  exportProductsToXLS(): void {
+
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.convertProductListToXLS());
+    const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
+    XLSX.writeFile(workbook, 'products.xlsx');
+    this.productsListForXLS = {};
+  }
+
   refreshProducts(): void {
     this.modal.openMessage('Reload all products?', 'Reload it means you will loose categories, HS codes and countries', 1)
       .then(result => {
@@ -89,6 +120,7 @@ export class ProductComponent implements OnDestroy {
           this.productService.refreshProducts()
             .subscribe(
               () => {
+                this.getProducts();
               },
               error => {
                 this.modal.openMessage('Server Error', error.error ? error.error.error : 'Can\'t load a list of products', 0);
