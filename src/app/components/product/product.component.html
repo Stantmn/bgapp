@@ -76,12 +76,15 @@
   </div>
   <div class="col-md-2">
     <button class="btn btn-warning" (click)="exportProductsToXLS()"
-            *ngIf="!!productsList && productsList.length && !showFormFlag">Export to XLS</button>
+            *ngIf="!!productsList && productsList.length && !showFormFlag">Export to XLSX</button>
   </div>
+  <div class="col-md-2">
+    <input hidden type="file" (change)="onFileChanged($event)" #fileInput>
+    <input type="button" class="btn btn-warning" value="Upload from XLSX" (click)="fileInput.click()" />  </div>
   <div class="col-md-2">
     <button class="btn btn-danger" (click)="refreshProducts()" *ngIf="!showFormFlag">Reload from Shopify</button>
   </div>
-  <div class="col-md-8"></div>
+  <div class="col-md-4"></div>
 </div>
 <br>
 <div class="row">

@@ -1,7 +1,7 @@
 import {
-  Component,
+  Component, ElementRef,
   OnDestroy,
-  QueryList,
+  QueryList, ViewChild,
   ViewChildren
 } from '@angular/core';
 import { ProductService } from '../../services/product.service';
@@ -33,6 +33,7 @@ export class ProductComponent implements OnDestroy {
   public productsList: Product[];
   public _productsList: Product[];
   private productsListForXLS: {};
+  private productsListFromXLS: Product[] = [];
   public product: Product;
   public categoryList: Category[];
   public filter: string;
@@ -46,8 +47,11 @@ export class ProductComponent implements OnDestroy {
   public dateTo: {};
   public showFormFlag = false;
   public countries: any;
+  private xlsData: any = {};
 
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
+  @ViewChild('fileInput')
+  fileInput: ElementRef;
 
   constructor(
     private productService: ProductService,
@@ -264,5 +268,118 @@ export class ProductComponent implements OnDestroy {
     this.showFormFlag = flag;
   }
 
+  onFileChanged(evt: any) {
+    const target: DataTransfer = <DataTransfer>(evt.target);
+    if (target.files.length !== 1) {
+      throw new Error('Cannot use multiple files');
+    }
+    const reader: FileReader = new FileReader();
+    reader.onload = (e: any) => {
+      const bstr: string = e.target.result;
+      const wb: XLSX.WorkBook = XLSX.read(bstr, {type: 'binary'});
+      const wsname: string = wb.SheetNames[0];
+      const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+      this.xlsData = <any>(XLSX.utils.sheet_to_json(ws, {header: 1}));
+      this.checkXLSData();
+      this.fileInput.nativeElement.value = '';
+    };
+    reader.readAsBinaryString(target.files[0]);
+  }
+
+  checkXLSData(): void {
+    const error = [];
+    let errorText = '';
+    for (let i = 1; i < this.xlsData.length; i++) {
+      const row = this.xlsData[i];
+      const product = new Product();
+      if (!!row[0] && !!row[1] && !!row[3] && !!row[4] && !!row[11]) {
+
+        if (parseInt(row[0], 10)) {
+          product.productId = parseInt(row[0], 10);
+        } else {
+          errorText += 'Product ID: Wrong format - ' + row[0] + '. ';
+        }
+        if (parseInt(row[1], 10)) {
+          product.variantId = parseInt(row[1], 10);
+        } else {
+          errorText += 'Variant ID: Wrong format - ' + row[1] + '. ';
+        }
+        if (row[2]) {
+          product.barcode = row[2];
+        }
+        if (row[3]) {
+          product.sku = row[3];
+        } else {
+          errorText += 'SKU: not exists. ';
+        }
+        if (row[4].length === 2) {
+          product.countryOfManufacture = row[4].toUpperCase();
+        } else {
+          errorText += 'Country has a wrong format. ';
+        }
+        product.hsCode = row[5];
+        if (row[6]) {
+          product.weight = row[6];
+        }
+        if (row[7]) {
+          product.weightUnit = row[7];
+        }
+        if (row[8]) {
+          product.created = row[8] ? row[8] : (new Date()).toISOString();
+        }
+        if (row[9]) {
+          product.updated = row[9];
+        }
+        if (row[10]) {
+          product.published = row[10];
+        }
+        product.description = row[11];
+        if (!errorText) {
+          this.productsListFromXLS.push(product);
+        }
+      } else {
+        errorText += 'Required fields doesn\'t exist. ';
+      }
+      if (errorText) {
+        errorText = '<b>Product ID:' + row[0] + ', Variant ID: ' + row[1] + '</b><br>' + errorText;
+        error.push(errorText);
+        errorText = '';
+      }
+    }
+
+    if (error.length) {
+      console.log(error);
+      this.modal.openMessage('XLS Error', error.join('<br>'), 0);
+    } else {
+      this.saveFromXLS();
+    }
+  }
+
+  saveFromXLS(): void {
+
+    this.modal.openMessage('Import all products?', 'Import means you will reload all products.', 1)
+      .then(result => {
+        if (result) {
+          this.productService.loadProducts(this.productsListFromXLS)
+            .subscribe(
+              response => {
+                this.modal.openMessage('Success', 'Products were saved. ' + response.message, 0);
+              },
+              error => {
+                this.modal.openMessage('Server Error', error.message ? error.error : 'Can\'t save the product information', 0);
+                console.log(error);
+              },
+              () => {
+                this.xlsData = {};
+                this.productsListFromXLS = [];
+                this.getProducts();
+              }
+            );
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
 }
 

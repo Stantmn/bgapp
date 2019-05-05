@@ -28,24 +28,6 @@ export class ModalComponent {
     this.dialog = 0;
   }
 
-  errorMessage(error) {
-    let text = '';
-    if (error.MessageDetail) {
-      text = error.MessageDetail + '<br>';
-    }
-    for (const key in error.ModelState) {
-      if (error.ModelState.hasOwnProperty(key)) {
-        text += error.ModelState[key][0] + '<br>';
-      }
-    }
-
-    this.modalRef = this.modalService.open(ModalContent);
-    this.modalRef.componentInstance.title = error.Message;
-    this.modalRef.componentInstance.text = text;
-    this.modalRef.componentInstance.dialog = 0;
-    return this.modalRef.result;
-  }
-
   openMessage(title: string, text: string, dialog: number) {
     this.modalRef = this.modalService.open(ModalContent);
     this.modalRef.componentInstance.title = title;

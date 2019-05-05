@@ -61,6 +61,10 @@ export class ProductService {
     return this.http.put(Settings.API_ENDPOINT + '/products/product/', product);
   }
 
+  loadProducts(products: Product[]): Observable<any> {
+    return this.http.post<Product>(Settings.API_ENDPOINT + '/products/load/', products);
+  }
+
   getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(Settings.API_ENDPOINT + `/categories/category/list/`)
       .pipe(
