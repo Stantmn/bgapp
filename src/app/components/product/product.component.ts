@@ -350,6 +350,8 @@ export class ProductComponent implements OnDestroy {
     if (error.length) {
       console.log(error);
       this.modal.openMessage('XLS Error', error.join('<br>'), 0);
+      this.xlsData = {};
+      this.productsListFromXLS = [];
     } else {
       this.saveFromXLS();
     }
