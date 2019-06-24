@@ -8,12 +8,12 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       { path: '', redirectTo: 'dashboard'},
-      { path: 'user', loadChildren: () => import('../components/user/user.module').then(m => m.UserModule) },
-      { path: 'store', loadChildren: () => import('../components/store/store.module').then(m => m.StoreModule) },
-      { path: 'order', loadChildren: () => import('../components/order/order.module').then(m => m.OrderModule) },
-      { path: 'product', loadChildren: () => import('../components/product/product.module').then(m => m.ProductModule) },
-      { path: 'form', loadChildren: () => import('./form/form.module').then(m => m.FormModule) },
-      { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) }
+      { path: 'user', loadChildren: '../components/user/user.module#UserModule' },
+      { path: 'store', loadChildren: '../components/store/store.module#StoreModule' },
+      { path: 'order', loadChildren: '../components/order/order.module#OrderModule' },
+      { path: 'product', loadChildren: '../components/product/product.module#ProductModule' },
+      { path: 'form', loadChildren: './form/form.module#FormModule' },
+      { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' }
     ]
   }
 ];
