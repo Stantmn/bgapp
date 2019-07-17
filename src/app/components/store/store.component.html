@@ -650,7 +650,7 @@
 
         <fieldset class="form-group">
           <label>Location *</label>
-          <select class="form-control" [(ngModel)]="store.location" name="location" required>
+          <select class="form-control" [(ngModel)]="store.location" name="location">
             <option *ngFor="let item of locations" [ngValue]="item.id">{{ item.zip }} {{ item.country }} {{ item.city }}
               {{ item.address1 }}
             </option>
