@@ -3,6 +3,7 @@ export class Order {
   shopifyOrderId: number;
   orderName: string;
   orderNumber: string;
+  shippingRate: number;
   orderIdentifier: string;
   shipmentIdentifier: string;
   apiKeyBorderGuru: string;
