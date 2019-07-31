@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Product } from '../../classes/product';
+import { Product, TableConfig } from '../../classes/product';
 import { ProductService } from '../../services/product.service';
 import { Category } from '../../classes/category';
 import { Countries } from '../../constants/constants';
@@ -11,10 +11,12 @@ import { ModalComponent } from '../../shared/modules/modal/modal.component';
   styleUrls: ['./inline-product.component.scss'],
   providers: [ProductService]
 })
+
 export class InlineProductComponent implements OnInit {
   @Input() product: Product;
   @Input() edit: boolean;
   @Input() categoryList: Category[];
+  @Input() tableConfig: TableConfig;
   @Output() deleted = new EventEmitter<boolean>();
   public _product: Product;
   public countries: any;

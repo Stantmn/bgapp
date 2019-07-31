@@ -1,13 +1,13 @@
 import {
   Component, ElementRef,
-  OnDestroy,
+  OnDestroy, OnInit,
   QueryList, ViewChild,
   ViewChildren
 } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { UserService } from '../../services/user.service';
 import { ModalComponent } from '../../shared/modules/modal/modal.component';
-import { Product } from '../../classes/product';
+import { Product, TableConfig } from '../../classes/product';
 import { Category } from '../../classes/category';
 import { Countries } from '../../constants/constants';
 import { NgbdSortableHeader } from '../../shared/directives/sortable.directive';
@@ -29,7 +29,7 @@ export interface SortEvent {
   styleUrls: ['./product.component.scss'],
   providers: [ProductService, DecimalPipe]
 })
-export class ProductComponent implements OnDestroy {
+export class ProductComponent implements OnInit, OnDestroy {
   public productsList: Product[];
   public _productsList: Product[];
   private productsListForXLS: {};
@@ -46,6 +46,8 @@ export class ProductComponent implements OnDestroy {
   public dateFrom: {};
   public dateTo: {};
   public showFormFlag = false;
+  public showTableConfig = false;
+  public tableConfig: TableConfig;
   public countries: any;
   private xlsData: any = {};
 
@@ -58,6 +60,19 @@ export class ProductComponent implements OnDestroy {
     private userService: UserService,
     private modal: ModalComponent,
   ) {
+    this.tableConfig = {
+      productId: true,
+      variantId: true,
+      sku: true,
+      description: true,
+      country: true,
+      hsCode: true,
+      category: true,
+      created: true
+    };
+  }
+
+  ngOnInit(): void {
     this.productCancel();
     this.countries = Countries;
     this.getProducts();

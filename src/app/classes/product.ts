@@ -21,3 +21,15 @@ export class Product {
   updated: string;
   published: string;
 }
+
+export interface TableConfig {
+  productId: boolean;
+  variantId: boolean;
+  sku: boolean;
+  description: boolean;
+  country: boolean;
+  hsCode: boolean;
+  category: boolean;
+  created: boolean;
+}
+

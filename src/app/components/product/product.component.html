@@ -32,7 +32,8 @@
 
         <fieldset class="form-group align-middle">
           <label>Country *</label>
-          <select class="form-control" [(ngModel)]="product.countryOfManufacture" name="countryOfManufacture" required>
+          <select class="form-control" [(ngModel)]="product.countryOfManufacture" name="countryOfManufacture"
+                  required>
             <option *ngFor="let country of countries | keyvalue" [ngValue]="country.key">{{ country.value }}
             </option>
           </select>
@@ -76,15 +77,60 @@
   </div>
   <div class="col-md-2">
     <button class="btn btn-warning" (click)="exportProductsToXLS()"
-            *ngIf="!!productsList && productsList.length && !showFormFlag">Export to XLSX</button>
+            *ngIf="!!productsList && productsList.length && !showFormFlag">Export to XLSX
+    </button>
   </div>
   <div class="col-md-2">
     <input hidden type="file" (change)="onFileChanged($event)" #fileInput>
-    <input type="button" class="btn btn-warning" value="Upload from XLSX" (click)="fileInput.click()" />  </div>
+    <input type="button" class="btn btn-warning" value="Upload from XLSX" (click)="fileInput.click()"/></div>
   <div class="col-md-2">
     <button class="btn btn-danger" (click)="refreshProducts()" *ngIf="!showFormFlag">Reload from Shopify</button>
   </div>
-  <div class="col-md-4"></div>
+  <div class="col-md-2">
+    <button class="btn btn-warning" (click)="showTableConfig = !showTableConfig">
+      Table Config
+    </button>
+  </div>
+  <div class="col-md-2"></div>
+</div>
+<br>
+<div class="row" *ngIf="showTableConfig">
+  <div class="col-lg-6">
+    <form #tableFields="ngForm">
+      <div class="form-group">
+        <label for="pId">Product ID: </label>
+        <input type="checkbox" name="pId" id="pId" [(ngModel)]="tableConfig.productId">
+      </div>
+      <div class="form-group">
+        <label for="cvariantId">Variant ID: </label>
+        <input type="checkbox" name="cvariantId" id="cvariantId" [(ngModel)]="tableConfig.variantId">
+      </div>
+      <div class="form-group">
+        <label for="csku">SKU: </label>
+        <input type="checkbox" name="csku" id="csku" [(ngModel)]="tableConfig.sku">
+      </div>
+      <div class="form-group">
+        <label for="cdescription">Description: </label>
+        <input type="checkbox" name="cdescription" id="cdescription" [(ngModel)]="tableConfig.description">
+      </div>
+      <div class="form-group">
+        <label for="country">Country: </label>
+        <input type="checkbox" name="country" id="country" [(ngModel)]="tableConfig.country">
+      </div>
+      <div class="form-group">
+        <label for="chsCode">HS Code: </label>
+        <input type="checkbox" name="chsCode" id="chsCode" [(ngModel)]="tableConfig.hsCode">
+      </div>
+      <div class="form-group">
+        <label for="category">Category: </label>
+        <input type="checkbox" name="category" id="category" [(ngModel)]="tableConfig.category">
+      </div>
+      <div class="form-group">
+        <label for="created">Created: </label>
+        <input type="checkbox" name="created" id="created" [(ngModel)]="tableConfig.created">
+      </div>
+    </form>
+  </div>
 </div>
 <br>
 <div class="row">
@@ -141,23 +187,24 @@
         <table class="table table-striped">
           <thead class="thead-inverse">
           <tr>
-            <th scope="col" sortable="productId" (sort)="onSort($event)" style="cursor: pointer;">Product ID</th>
-            <th scope="col" sortable="variantId" (sort)="onSort($event)" style="cursor: pointer;">Variant ID</th>
-            <th scope="col" sortable="sku" (sort)="onSort($event)" style="cursor: pointer;">SKU</th>
-            <th>Description</th>
-            <th scope="col" sortable="countryOfManufacture" (sort)="onSort($event)" style="cursor: pointer;">Country
+            <th *ngIf="tableConfig.productId" scope="col" sortable="productId" (sort)="onSort($event)" style="cursor: pointer;">Product ID</th>
+            <th *ngIf="tableConfig.variantId" scope="col" sortable="variantId" (sort)="onSort($event)" style="cursor: pointer;">Variant ID</th>
+            <th *ngIf="tableConfig.sku" scope="col" sortable="sku" (sort)="onSort($event)" style="cursor: pointer;">SKU</th>
+            <th *ngIf="tableConfig.description">Description</th>
+            <th *ngIf="tableConfig.country" scope="col" sortable="countryOfManufacture" (sort)="onSort($event)" style="cursor: pointer;">Country
             </th>
-            <th>HS Code</th>
-            <th scope="col" sortable="categoryName" (sort)="onSort($event)" style="cursor: pointer; min-width: 300px">
+            <th *ngIf="tableConfig.hsCode">HS Code</th>
+            <th *ngIf="tableConfig.category"  scope="col" sortable="categoryName" (sort)="onSort($event)" style="cursor: pointer; min-width: 300px">
               Category
             </th>
-            <th scope="col" sortable="created" (sort)="onSort($event)" style="cursor: pointer;">Created</th>
+            <th *ngIf="tableConfig.created" scope="col" sortable="created" (sort)="onSort($event)" style="cursor: pointer;">Created</th>
             <th colspan="2">Action</th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let product of _productsList;"
-              [categoryList]="categoryList" [product]="product" [edit]="editForm" (deleted)="deleteProduct($event)"
+              [categoryList]="categoryList" [product]="product" [edit]="editForm" [tableConfig]="tableConfig"
+              (deleted)="deleteProduct($event)"
               inline-product>
 
           </tr>

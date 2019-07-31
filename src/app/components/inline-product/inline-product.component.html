@@ -1,23 +1,23 @@
-  <td *ngIf="!edit" (dblclick)="editRow()">{{_product.productId}}</td>
+  <td *ngIf="!edit && tableConfig.productId" (dblclick)="editRow()">{{_product.productId}}</td>
   <td *ngIf="edit"><input [(ngModel)]="_product.productId" size="13" name="productId"></td>
-  <td *ngIf="!edit" (dblclick)="editRow()">{{_product.variantId}}</td>
+  <td *ngIf="!edit && tableConfig.variantId" (dblclick)="editRow()">{{_product.variantId}}</td>
   <td *ngIf="edit"><input [(ngModel)]="_product.variantId" size="15" name="variantId"></td>
-  <td *ngIf="!edit" (dblclick)="editRow()">{{_product?.sku}}</td>
+  <td *ngIf="!edit && tableConfig.sku" (dblclick)="editRow()">{{_product?.sku}}</td>
   <td *ngIf="edit"><input [(ngModel)]="_product.sku" size="8" name="sku"></td>
-  <td *ngIf="!edit" (dblclick)="editRow()">{{_product?.description}}</td>
+  <td *ngIf="!edit && tableConfig.description" (dblclick)="editRow()">{{_product?.description}}</td>
   <td *ngIf="edit">
     <input [(ngModel)]="_product.description" name="description">
   </td>
-  <td *ngIf="!edit" (dblclick)="editRow()">{{_product?.countryOfManufacture}}</td>
+  <td *ngIf="!edit && tableConfig.country" (dblclick)="editRow()">{{_product?.countryOfManufacture}}</td>
   <td *ngIf="edit">
     <select class="form-control" [(ngModel)]="_product.countryOfManufacture" name="countryOfManufacture">
       <option *ngFor="let country of countries | keyvalue" [ngValue]="country.key">{{ country.value }}
       </option>
     </select>
   </td>
-  <td *ngIf="!edit" (dblclick)="editRow()">{{_product?.hsCode}}</td>
+  <td *ngIf="!edit && tableConfig.hsCode" (dblclick)="editRow()">{{_product?.hsCode}}</td>
   <td *ngIf="edit"><input [(ngModel)]="_product.category.hsCode" name="hsCode" size="12"></td>
-  <td *ngIf="!edit" (dblclick)="editRow()">{{_product.categoryName}}</td>
+  <td *ngIf="!edit && tableConfig.category" (dblclick)="editRow()">{{_product.categoryName}}</td>
   <td *ngIf="edit">
     <ng-select [items]="categoryList" *ngIf="categoryList"
                bindLabel="fullName"
@@ -25,7 +25,7 @@
                [(ngModel)]="_product.category._id">
     </ng-select>
   </td>
-  <td (dblclick)="editRow()">{{product?.created | date:'MM/dd/yyyy'}}</td>
+  <td *ngIf="tableConfig.created" (dblclick)="editRow()">{{product?.created | date:'MM/dd/yyyy'}}</td>
   <td>
     <button *ngIf="!edit" class="btn btn-success" (click)="editRow()">Edit</button>
     <button *ngIf="edit" class="btn btn-success" (click)="saveProduct()"
