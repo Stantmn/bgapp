@@ -27,7 +27,7 @@
                  required>
         </div>
         <div class="form-group">
-          <label>Store Name</label>
+          <label>Store Name *</label>
           <input type="text" class="form-control" placeholder="Store Name" name="storeName"
                  [(ngModel)]="store.storeName" required>
         </div>
@@ -59,8 +59,8 @@
                  [(ngModel)]="store.fulfillmentService">
         </div>
         <div class="form-group">
-          <label for="sendField">Identify orders by field:</label>
-          <select class="form-control" id="sendField" name="sendField" [(ngModel)]="store.sendField">
+          <label for="sendField">Identify orders by field *</label>
+          <select class="form-control" id="sendField" name="sendField" [(ngModel)]="store.sendField" required>
             <option value="ID">ID</option>
             <option value="Name">Name</option>
             <option value="Number">Number</option>
