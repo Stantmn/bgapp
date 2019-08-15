@@ -10,6 +10,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'dashboard'},
       { path: 'user', loadChildren: '../components/user/user.module#UserModule' },
       { path: 'store', loadChildren: '../components/store/store.module#StoreModule' },
+      { path: 'billing', loadChildren: '../components/billing/billing.module#BillingModule' },
       { path: 'order', loadChildren: '../components/order/order.module#OrderModule' },
       { path: 'product', loadChildren: '../components/product/product.module#ProductModule' },
       { path: 'logs', loadChildren: '../components/log/log.module#LogModule' },

@@ -1,0 +1,35 @@
+<div [@routerTransition]>
+  <app-page-header [heading]="'Stores'" [icon]="'fa-edit'"></app-page-header>
+
+  <div class="row">
+    <div class="col col-xl-12 col-lg-12">
+      <div class="card mb-3">
+        <div class="card-header">Stores</div>
+        <div class="card-block table-responsive">
+          <table class="table table-bordered">
+            <thead class="thead-inverse">
+            <tr>
+              <th>Company</th>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Billing</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let store of storesList;">
+              <td>{{store.company}}</td>
+              <td>{{store.storeName}}</td>
+              <td>{{store.status}}</td>
+              <td>
+                <button class="btn btn-warning"
+                        (click)="store.recurringPaymentId ? cancelBilling(store._id) : createBilling(store._id)">
+                  {{ store.recurringPaymentId ? 'Cancel' : 'Create'}}
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>

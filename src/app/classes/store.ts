@@ -14,6 +14,7 @@ export class Store {
   apiSecretShopify: string;
   apiKeyAdmin: string;
   apiSecretAdmin: string;
+  recurringPaymentId: number;
   accountNumber: string;
   countryOfOrigin: string;
   countryCode: string;
