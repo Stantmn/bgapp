@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ModalComponent } from '../../shared/modules/modal/modal.component';
 import { routerTransition } from '../../router.animations';
 import { Store } from '../../classes/store';
 import { StoreService } from '../../services/store.service';
 import { Webhook } from '../../classes/webhook';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-store',
@@ -15,7 +16,7 @@ import { Webhook } from '../../classes/webhook';
 export class BillingComponent implements OnInit {
   public storesList: Store[];
 
-  constructor(private storeService: StoreService, private modal: ModalComponent) {
+  constructor(private storeService: StoreService, private modal: ModalComponent, @Inject(DOCUMENT) document) {
   }
 
   ngOnInit() {
@@ -35,15 +36,37 @@ export class BillingComponent implements OnInit {
       );
   }
 
+  customCharge(storeId: string): void {
+    const amount = parseFloat((document.getElementById(storeId) as HTMLInputElement).value);
+    this.modal.openMessage('Create a custom charge?', 'Charge $' + amount + ' will be implemented for the current store', 1)
+      .then(result => {
+        if (result && storeId) {
+          this.storeService.customCharge(storeId, amount)
+            .subscribe(
+              res => {
+                this.modal.openMessage('Billing', res.message, 0);
+              },
+              error => {
+                this.modal.openMessage('Server Error', 'Can\'t charge the store', 0);
+                console.log(error);
+              },
+              () => {
+                this.getStores();
+              }
+            );
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
   createBilling(storeId): void {
     if (storeId) {
       this.storeService.createBilling(storeId)
         .subscribe(
-          store => {
-            const index = this.storesList.indexOf(this.storesList.find(s => s._id === storeId));
-            if (index !== -1) {
-              this.storesList[index] = store;
-            }
+          res => {
+            this.modal.openMessage('Billing', res.message, 0);
           },
           error => {
             this.modal.openMessage('Server Error', 'Can\'t set Billing for the store', 0);
@@ -60,13 +83,10 @@ export class BillingComponent implements OnInit {
     this.modal.openMessage('Remove this store billing cycle?', 'Payments will not be charged for all orders', 1)
       .then(result => {
         if (result && storeId) {
-          this.storeService.createBilling(storeId)
+          this.storeService.cancelBilling(storeId)
             .subscribe(
-              () => {
-                const index = this.storesList.indexOf(this.storesList.find(s => s._id === storeId));
-                if (index !== -1) {
-                  this.storesList[index].recurringPaymentId = null;
-                }
+              res => {
+                this.modal.openMessage('Billing', res.message, 0);
               },
               error => {
                 this.modal.openMessage('Server Error', 'Can\'t cancel Billing for the store', 0);

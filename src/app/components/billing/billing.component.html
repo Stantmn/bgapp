@@ -13,6 +13,7 @@
               <th>Name</th>
               <th>Status</th>
               <th>Billing</th>
+              <th>Custom Charge</th>
             </tr>
             </thead>
             <tbody>
@@ -21,10 +22,21 @@
               <td>{{store.storeName}}</td>
               <td>{{store.status}}</td>
               <td>
-                <button class="btn btn-warning"
+                <p *ngIf="!store.accessToken">Token not exists</p>
+                <button class="btn btn-warning" *ngIf="store.accessToken"
                         (click)="store.recurringPaymentId ? cancelBilling(store._id) : createBilling(store._id)">
                   {{ store.recurringPaymentId ? 'Cancel' : 'Create'}}
                 </button>
+              </td>
+              <td>
+                <div class="row" *ngIf="store.recurringPaymentId">
+                  <div class="col-md-6">
+                    <input class="form-control" size="4" type="number" size="5" id="{{store._id}}" value="0">
+                  </div>
+                  <div class="col-md-6">
+                    <button class="btn btn-danger" (click)="customCharge(store._id)">Charge</button>
+                  </div>
+                </div>
               </td>
             </tr>
             </tbody>

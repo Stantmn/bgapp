@@ -30,12 +30,16 @@ export class StoreService {
     return this.http.put(Settings.API_ENDPOINT + '/stores/store/', store);
   }
 
-  createBilling(_id: string): Observable<Store> {
-    return this.http.post<Store>(Settings.API_ENDPOINT + '/stores/store/billing/', {storeId: _id});
+  createBilling(_id: string): Observable<any> {
+    return this.http.post<any>(Settings.API_ENDPOINT + '/stores/store/billing/', {storeId: _id});
   }
 
   cancelBilling(_id: string): Observable<any> {
     return this.http.delete<any>(Settings.API_ENDPOINT + '/stores/store/billing/' + _id);
+  }
+
+  customCharge(storeId: string, amount: number): Observable<any> {
+    return this.http.post<any>(Settings.API_ENDPOINT + '/stores/store/billing/charge', {storeId: storeId, amount: amount});
   }
 
   getLocations(_id: string): Observable<any> {
