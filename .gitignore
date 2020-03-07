@@ -41,3 +41,8 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+dist/*
+.vscode/*
+yarn.lock
+browserslist
+.gitignore
