@@ -3,6 +3,7 @@ import { OrderService } from '../../services/order.service';
 import { UserService } from '../../services/user.service';
 import { ModalComponent } from '../../shared/modules/modal/modal.component';
 import { Order } from '../../classes/order';
+import { PaginationButton } from 'src/app/constants/enums';
 
 @Component({
   selector: 'app-order',
@@ -11,22 +12,25 @@ import { Order } from '../../classes/order';
   providers: [OrderService]
 })
 export class OrderComponent implements OnInit {
-  public ordersList: Order[];
-  public page = 1;
+  ordersList: Order[];
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+  paginationButton = PaginationButton;
 
   constructor(private orderService: OrderService, private userService: UserService, private modal: ModalComponent) {
   }
 
   ngOnInit() {
-    this.getOrders(this.page);
+    this.getOrders();
   }
 
-  getOrders(page: number): void {
-    this.page = page;
-    this.orderService.getOrders(this.page)
+  getOrders(page?: PaginationButton, cursor?: string): void {
+    this.orderService.getOrders(page, cursor)
       .subscribe(
         response => {
-          this.ordersList = response;
+          this.ordersList = response.orders;
+          this.hasNextPage = response.pageInfo.hasNextPage;
+          this.hasPreviousPage = response.pageInfo.hasPreviousPage;
         },
         error => {
           this.modal.openMessage('Server Error', 'Can\'t get the Orders', 0);

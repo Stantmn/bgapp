@@ -10,4 +10,10 @@ export class Order {
   customer: string;
   shipping: string;
   created: string;
+  cursor: string;
+}
+
+export interface OrderResponse {
+orders: Order[];
+pageInfo: { hasPreviousPage: boolean, hasNextPage: boolean };
 }

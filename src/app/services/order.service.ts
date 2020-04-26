@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { Settings } from '../constants/settings';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Order } from '../classes/order';
+import { OrderResponse } from '../classes/order';
+import { PaginationButton } from '../constants/enums';
 
 @Injectable()
 export class OrderService {
@@ -10,8 +11,8 @@ export class OrderService {
   constructor(private http: HttpClient) {
   }
 
-  getOrders(page: number = 1): Observable<Order[]> {
-    return this.http.get<Order[]>(Settings.API_ENDPOINT + `/orders/order/list/?page=${page}`);
+  getOrders(page = PaginationButton.Next, cursor = ''): Observable<OrderResponse> {
+    return this.http.get<OrderResponse>(Settings.API_ENDPOINT + `/orders/order/list/?page=${page}&cursor=${cursor}`);
   }
 
 }
