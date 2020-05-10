@@ -1,3 +1,5 @@
+import { Roles } from '../constants/enums';
+
 export class User {
   _id: string;
   email: string;
@@ -6,7 +8,7 @@ export class User {
   token: string;
   salt: string;
   expiration: string;
-  role: string;
+  role: Roles;
   status: string;
   submerchant: string;
   storeName: string;

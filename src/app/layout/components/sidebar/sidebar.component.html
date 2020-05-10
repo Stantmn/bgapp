@@ -4,15 +4,15 @@
       <i class="fa fa-fw fa-dashboard"></i>&nbsp;
       <span>{{ 'Dashboard' }}</span>
     </a>
-    <a routerLink="/order" [routerLinkActive]="['router-link-active']" class="list-group-item">
+    <a routerLink="/order" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role === roles.Admin || user.role === roles.UserOrder || user.role === roles.StoreAdmin">
       <i class="fa fa-fw fa-first-order"></i>&nbsp;
       <span>{{ 'Orders' }}</span>
     </a>
-    <a routerLink="/product" [routerLinkActive]="['router-link-active']" class="list-group-item">
+    <a routerLink="/product" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role === roles.Admin || user.role === roles.UserProduct || user.role === roles.StoreAdmin">
       <i class="fa fa-fw fa-product-hunt"></i>&nbsp;
       <span>{{ 'Products' }}</span>
     </a>
-    <div class="nested-menu" *ngIf="user.role === 'admin'">
+    <div class="nested-menu" *ngIf="user.role === roles.Admin">
       <a class="list-group-item" (click)="addExpandClass('pages')">
         <i class="fa fa-plus"></i>&nbsp;
         <span>{{ 'Admin' }}</span>

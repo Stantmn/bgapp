@@ -5,6 +5,7 @@ import { ModalComponent } from '../../shared/modules/modal/modal.component';
 import { routerTransition } from '../../router.animations';
 import { StoreService } from '../../services/store.service';
 import { Store } from '../../classes/store';
+import { Roles } from 'src/app/constants/enums';
 
 @Component({
   selector: 'app-user',
@@ -17,7 +18,7 @@ export class UserComponent implements OnInit {
   public usersList: User[] = [];
   public user = new User;
   public storesList: Store[];
-  public roles = ['admin', 'user'];
+  public roles = Roles;
   public statuses = ['enabled', 'disabled'];
   public showFormFlag = false;
 

@@ -4,6 +4,7 @@ import { User } from '../classes/user';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
+import { Roles } from '../constants/enums';
 
 export interface Login {
   email: string;
@@ -53,7 +54,7 @@ export class UserService {
     user.email = localStorage.getItem('email');
     user.token = localStorage.getItem('token');
     user.expiration = localStorage.getItem('expiration');
-    user.role = localStorage.getItem('role');
+    user.role = localStorage.getItem('role') as Roles;
     user.isLogged = localStorage.getItem('isLogged');
     return user;
   }

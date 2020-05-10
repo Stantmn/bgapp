@@ -2,6 +2,7 @@ import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { User } from '../../../classes/user';
 import { UserService } from '../../../services/user.service';
+import { Roles } from 'src/app/constants/enums';
 
 @Component({
   selector: 'app-sidebar',
@@ -16,6 +17,7 @@ export class SidebarComponent implements OnInit {
   pushRightClass: string;
 
   @Output() collapsedEvent = new EventEmitter<boolean>();
+  roles = Roles;
 
   constructor(public router: Router, private userService: UserService) {
 
