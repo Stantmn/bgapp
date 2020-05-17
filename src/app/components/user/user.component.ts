@@ -52,7 +52,9 @@ export class UserComponent implements OnInit {
           this.usersList = response;
           for (let i = 0; i < this.usersList.length; i++) {
             const k = this.storesList.map(e => e._id).indexOf(this.usersList[i].submerchant);
-            this.usersList[i].storeName = this.storesList[k].storeName;
+            if (k !== -1) {
+              this.usersList[i].storeName = this.storesList[k].storeName;
+            }
           }
         },
         error => {
