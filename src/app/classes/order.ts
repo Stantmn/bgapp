@@ -14,6 +14,13 @@ export class Order {
 }
 
 export interface OrderResponse {
-orders: Order[];
-pageInfo: { hasPreviousPage: boolean, hasNextPage: boolean };
+  orders: Order[];
+  pageInfo: OrderPageInfo;
+}
+
+export interface OrderPageInfo {
+    hasPreviousPage: boolean;
+    hasNextPage: boolean;
+    firstCursor: string;
+    lastCursor: string;
 }

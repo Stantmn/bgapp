@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../../services/order.service';
 import { UserService } from '../../services/user.service';
 import { ModalComponent } from '../../shared/modules/modal/modal.component';
-import { Order } from '../../classes/order';
+import { Order, OrderPageInfo } from '../../classes/order';
 import { PaginationButton } from 'src/app/constants/enums';
 
 @Component({
@@ -13,8 +13,7 @@ import { PaginationButton } from 'src/app/constants/enums';
 })
 export class OrderComponent implements OnInit {
   ordersList: Order[];
-  hasPreviousPage: boolean;
-  hasNextPage: boolean;
+  pageInfo: OrderPageInfo;
   paginationButton = PaginationButton;
 
   constructor(private orderService: OrderService, private userService: UserService, private modal: ModalComponent) {
@@ -29,8 +28,7 @@ export class OrderComponent implements OnInit {
       .subscribe(
         response => {
           this.ordersList = response.orders;
-          this.hasNextPage = response.pageInfo.hasNextPage;
-          this.hasPreviousPage = response.pageInfo.hasPreviousPage;
+          this.pageInfo = response.pageInfo;
         },
         error => {
           this.modal.openMessage('Server Error', 'Can\'t get the Orders', 0);
