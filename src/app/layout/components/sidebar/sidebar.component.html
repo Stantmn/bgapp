@@ -4,11 +4,11 @@
       <i class="fa fa-fw fa-dashboard"></i>&nbsp;
       <span>{{ 'Dashboard' }}</span>
     </a>
-    <a routerLink="/order" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role === roles.Admin || user.role === roles.UserOrder || user.role === roles.StoreAdmin">
+    <a routerLink="/order" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role === roles.Admin || user.role === roles.UserOrder || user.role === roles.StoreAdmin || user.role === roles.UserOrder">
       <i class="fa fa-fw fa-first-order"></i>&nbsp;
       <span>{{ 'Orders' }}</span>
     </a>
-    <a routerLink="/product" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role === roles.Admin || user.role === roles.UserProduct || user.role === roles.StoreAdmin">
+    <a routerLink="/product" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="user.role === roles.Admin || user.role === roles.UserProduct || user.role === roles.StoreAdmin || user.role === roles.UserOrder">
       <i class="fa fa-fw fa-product-hunt"></i>&nbsp;
       <span>{{ 'Products' }}</span>
     </a>
