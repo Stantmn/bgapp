@@ -16,20 +16,19 @@
           <tr>
             <th>Shopify ID</th>
             <th>Name</th>
-            <th>Number</th>
             <th>BG ID</th>
             <th>Created</th>
             <th>Rate</th>
             <th>Customer</th>
             <th>Ship to</th>
             <th>Label</th>
+            <th>Fulfillment</th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let order of ordersList;">
             <td>{{order.shopifyOrderId}}</td>
             <td>{{order.orderName}}</td>
-            <td>{{order.orderNumber}}</td>
             <td>{{order.orderIdentifier}}</td>
             <td>{{order.created}}</td>
             <td>{{order.shippingRate}}</td>
@@ -40,6 +39,10 @@
                 href="https://app.borderguru.com/api/orders/label/{{order.shipmentIdentifier}}?apikey={{order.apiKeyBorderGuru}}">
                 View
               </a>
+            </td>
+            <td>
+              <button *ngIf="order.shippingStatus !== 'success'" class="btn btn-danger" (click)="fulfillOrder(order.shopifyOrderId)">Fulfillment</button>
+              <p *ngIf="order.shippingStatus === 'success'">Fulfilled</p>
             </td>
           </tr>
           </tbody>

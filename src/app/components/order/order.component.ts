@@ -31,7 +31,21 @@ export class OrderComponent implements OnInit {
           this.pageInfo = response.pageInfo;
         },
         error => {
-          this.modal.openMessage('Server Error', 'Can\'t get the Orders', 0);
+          this.modal.openMessage('Server Error', 'Can\'t get Orders', 0);
+          console.log(error);
+        }
+      );
+  }
+
+  fulfillOrder(orderId: number): void {
+    this.orderService.fulfillOrder(orderId)
+      .subscribe(
+        () => {
+          this.modal.openMessage('Fulfillment', `The order: ${orderId} was fulfilled`, 0);
+          this.getOrders();
+        },
+        error => {
+          this.modal.openMessage('Server Error', `Can\'t fulfill the Order: ${orderId}`, 0);
           console.log(error);
         }
       );

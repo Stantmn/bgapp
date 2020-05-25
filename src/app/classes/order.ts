@@ -9,6 +9,7 @@ export class Order {
   apiKeyBorderGuru: string;
   customer: string;
   shipping: string;
+  shippingStatus: string;
   created: string;
   cursor: string;
 }
