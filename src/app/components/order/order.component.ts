@@ -15,6 +15,7 @@ export class OrderComponent implements OnInit {
   ordersList: Order[];
   pageInfo: OrderPageInfo;
   paginationButton = PaginationButton;
+  includeDraftOrders: boolean;
 
   constructor(private orderService: OrderService, private userService: UserService, private modal: ModalComponent) {
   }
@@ -23,8 +24,8 @@ export class OrderComponent implements OnInit {
     this.getOrders();
   }
 
-  getOrders(page?: PaginationButton, cursor?: string): void {
-    this.orderService.getOrders(page, cursor)
+  getOrders(page?: PaginationButton, cursor?: string, includeDraftOrders?: boolean): void {
+    this.orderService.getOrders(page, cursor, includeDraftOrders)
       .subscribe(
         response => {
           this.ordersList = response.orders;
@@ -46,6 +47,20 @@ export class OrderComponent implements OnInit {
         },
         error => {
           this.modal.openMessage('Server Error', `Can\'t fulfill the Order: ${orderId}`, 0);
+          console.log(error);
+        }
+      );
+  }
+
+  createLabel(orderId: number): void {
+    this.orderService.createLabel(orderId)
+      .subscribe(
+        () => {
+          this.modal.openMessage('Fulfillment', `Label for the order: ${orderId} was created`, 0);
+          this.getOrders();
+        },
+        error => {
+          this.modal.openMessage('Server Error', `Can\'t create label for the order: ${orderId}`, 0);
           console.log(error);
         }
       );

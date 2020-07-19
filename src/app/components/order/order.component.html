@@ -1,53 +1,69 @@
 <div class="row">
-  <div class="col col-xl-12 col-lg-12">
-    <div class="row">
-      <div class="col-2 button_space" *ngIf="pageInfo && pageInfo.hasPreviousPage">
-        <button class="btn btn-success" (click)="getOrders(paginationButton.Prev, pageInfo.firstCursor )">Previous</button>
+  <div class="col-12">
+    <form>
+      <div class="form-group">
+        <label for="includeDraftOrders"><b>Include draft orders:</b></label>
+        <input style="margin-left: 8px;" type="checkbox" name="includeDraftOrders" id="includeDraftOrders"
+          [(ngModel)]="includeDraftOrders" (change)="getOrders('', '', includeDraftOrders)">
       </div>
-      <div class="col-2 button_space" *ngIf="pageInfo && pageInfo.hasNextPage">
-        <button class="btn btn-success"(click)="getOrders(paginationButton.Next, pageInfo.lastCursor)">Next</button>
-      </div>
-    </div>
-    <div class="card mb-3">
-      <div class="card-header">Orders</div>
-      <div class="card-block table-responsive">
-        <table class="table table-bordered">
-          <thead class="thead-inverse">
-          <tr>
-            <th>Shopify ID</th>
-            <th>Name</th>
-            <th>BG ID</th>
-            <th>Created</th>
-            <th>Rate</th>
-            <th>Customer</th>
-            <th>Ship to</th>
-            <th>Label</th>
-            <th>Fulfillment</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let order of ordersList;">
-            <td>{{order.shopifyOrderId}}</td>
-            <td>{{order.orderName}}</td>
-            <td>{{order.orderIdentifier}}</td>
-            <td>{{order.created}}</td>
-            <td>{{order.shippingRate}}</td>
-            <td>{{order.customer}}</td>
-            <td>{{order.shipping}}</td>
-            <td>
-              <a
-                href="https://app.borderguru.com/api/orders/label/{{order.shipmentIdentifier}}?apikey={{order.apiKeyBorderGuru}}">
-                View
-              </a>
-            </td>
-            <td>
-              <button *ngIf="order.shippingStatus !== 'success'" class="btn btn-danger" (click)="fulfillOrder(order.shopifyOrderId)">Fulfillment</button>
-              <p *ngIf="order.shippingStatus === 'success'">Fulfilled</p>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+    </form>
   </div>
 </div>
+<div class=" row">
+        <div class="col col-xl-12 col-lg-12">
+          <div class="row">
+            <div class="col-2 button_space" *ngIf="pageInfo && pageInfo.hasPreviousPage">
+              <button class="btn btn-success"
+                (click)="getOrders(paginationButton.Prev, pageInfo.firstCursor, includeDraftOrders)">Previous</button>
+            </div>
+            <div class="col-2 button_space" *ngIf="pageInfo && pageInfo.hasNextPage">
+              <button class="btn btn-success"
+                (click)="getOrders(paginationButton.Next, pageInfo.lastCursor, includeDraftOrders)">Next</button>
+            </div>
+          </div>
+          <div class="card mb-3">
+            <div class="card-header">Orders</div>
+            <div class="card-block table-responsive">
+              <table class="table table-bordered">
+                <thead class="thead-inverse">
+                  <tr>
+                    <th>Shopify ID</th>
+                    <th>Name</th>
+                    <th>BG ID</th>
+                    <th>Created</th>
+                    <th>Rate</th>
+                    <th>Customer</th>
+                    <th>Ship to</th>
+                    <th>Label</th>
+                    <th>Fulfillment</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let order of ordersList;">
+                    <td>{{order.shopifyOrderId}}</td>
+                    <td>{{order.orderName}}</td>
+                    <td>{{order.orderIdentifier}}</td>
+                    <td>{{order.created}}</td>
+                    <td>{{order.shippingRate}}</td>
+                    <td>{{order.customer}}</td>
+                    <td>{{order.shipping}}</td>
+                    <td>
+                      <a *ngIf="order.shipmentIdentifier"
+                        href="https://app.borderguru.com/api/orders/label/{{order.shipmentIdentifier}}?apikey={{order.apiKeyBorderGuru}}">
+                        View
+                      </a>
+                      <button *ngIf="!order.shipmentIdentifier" class="btn btn-warning"
+                        (click)="createLabel(order.shopifyOrderId)">Create</button>
+                    </td>
+                    <td>
+                      <button *ngIf="order.shipmentIdentifier && order.shippingStatus !== 'success'"
+                        class="btn btn-danger" (click)="fulfillOrder(order.shopifyOrderId)">Fulfillment</button>
+                      <p *ngIf="order.shipmentIdentifier && order.shippingStatus === 'success'"><b>Fulfilled</b></p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
