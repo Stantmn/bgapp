@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col-md-2">
+    <button class="btn btn-warning" (click)="exportRatesToXLS()" *ngIf="!!rates && rates.length">Export to XLSX
+    </button>
+  </div>
+  <div class="col-md-2">
+    <input hidden type="file" (change)="onFileChanged($event)" #fileInput>
+    <input type="button" class="btn btn-warning" value="Upload from XLSX" (click)="fileInput.click()" /></div>
+  <div class="col-md-2"></div>
+</div>
+<br>
+<div class="row">
+  <div class="col col-xl-12 col-lg-12">
+    <div class="card mb-3">
+      <div class="card-header">Rates</div>
+      <div class="card-block table-responsive">
+        <table class="table table-bordered" *ngIf="rates && rates.length">
+          <thead class="thead-inverse">
+            <tr>
+              <th>Country</th>
+              <td *ngFor="let rate of rates[0].rates">{{rate.weight}}</td>
+              </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of rates;">
+             <td>{{item.countryCode}}</td>
+              <td *ngFor="let rate of item.rates">{{rate.cost}}</td>
+
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+</div>

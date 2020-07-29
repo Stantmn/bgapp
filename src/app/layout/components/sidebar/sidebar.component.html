@@ -20,6 +20,12 @@
       <li class="nested" [class.expand]="showMenu === 'pages'">
         <ul class="submenu">
           <li>
+            <a routerLink="/settings" [routerLinkActive]="['router-link-active']">
+              <i class="fa fa-usert"></i>&nbsp;
+              <span>{{ 'Settings' }}</span>
+            </a>
+          </li>
+          <li>
             <a routerLink="/user" [routerLinkActive]="['router-link-active']">
               <i class="fa fa-usert"></i>&nbsp;
               <span>{{ 'Users' }}</span>

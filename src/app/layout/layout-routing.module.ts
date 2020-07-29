@@ -8,6 +8,7 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       { path: '', redirectTo: 'dashboard'},
+      { path: 'settings', loadChildren: '../components/settings/settings.module#SettingsModule' },
       { path: 'user', loadChildren: '../components/user/user.module#UserModule' },
       { path: 'store', loadChildren: '../components/store/store.module#StoreModule' },
       { path: 'billing', loadChildren: '../components/billing/billing.module#BillingModule' },
