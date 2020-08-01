@@ -4,7 +4,7 @@
       <div class="form-group">
         <label for="includeDraftOrders"><b>Include draft orders:</b></label>
         <input style="margin-left: 8px;" type="checkbox" name="includeDraftOrders" id="includeDraftOrders"
-          [(ngModel)]="includeDraftOrders" (change)="getOrders('', '', includeDraftOrders)">
+          [(ngModel)]="includeDraftOrders" (change)="getOrders(null, null, includeDraftOrders)">
       </div>
     </form>
   </div>
