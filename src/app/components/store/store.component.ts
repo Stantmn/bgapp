@@ -19,6 +19,7 @@ export class StoreComponent implements OnInit {
   public showFormFlag = false;
   public locations: Location[];
   public webhooks: Webhook[];
+  public showShippingRateForm = false;
 
   constructor(private storeService: StoreService, private modal: ModalComponent) {
   }

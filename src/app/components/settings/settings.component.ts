@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ShippingRate } from 'src/app/classes/shipping-rate';
+import { ShippingRate } from '../../classes/shipping-rate';
 
 @Component({
   selector: 'app-settings',

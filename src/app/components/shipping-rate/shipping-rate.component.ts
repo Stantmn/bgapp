@@ -119,7 +119,7 @@ export class ShippingRateComponent implements OnInit {
           this.rateService.loadRates(this.ratesFromXLS, this.storeId)
             .subscribe(
               response => {
-                this.modal.openMessage('Success', 'Rates were saved. ' + response.message, 0);
+                this.modal.openMessage('Success', 'Rates were saved. ' + response, 0);
               },
               error => {
                 this.modal.openMessage('Server Error', error.message ? error.error : 'Can\'t save the rates information', 0);

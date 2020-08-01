@@ -24,12 +24,12 @@
             <div class="form-group">
               <label>Company *</label>
               <input type="text" class="form-control" placeholder="Company" name="company" [(ngModel)]="store.company"
-                     required>
+                required>
             </div>
             <div class="form-group">
               <label>Store Name *</label>
               <input type="text" class="form-control" placeholder="Store Name" name="storeName"
-                     [(ngModel)]="store.storeName" required>
+                [(ngModel)]="store.storeName" required>
             </div>
 
             <div class="form-group">
@@ -40,7 +40,7 @@
                 </div>
                 <div class="col-md-6">
                   <input type="text" class="form-control" placeholder="Subdomain" name="merchantIdentifier"
-                         [(ngModel)]="store.merchantIdentifier" required>
+                    [(ngModel)]="store.merchantIdentifier" required>
                 </div>
                 <div class="col-md-2">
                   .myshopify.com
@@ -51,12 +51,12 @@
             <div class="form-group">
               <label for="differentFulfillment">3rd Party Fulfillment:</label>
               <input type="checkbox" name="differentFulfillment" id="differentFulfillment"
-                     [(ngModel)]="store.differentFulfillment">
+                [(ngModel)]="store.differentFulfillment">
             </div>
             <div class="form-group">
               <label for="fulfillmentService">Fulfillment Service:</label>
               <input type="checkbox" name="fulfillmentService" id="fulfillmentService"
-                     [(ngModel)]="store.fulfillmentService">
+                [(ngModel)]="store.fulfillmentService">
             </div>
             <div class="form-group">
               <label for="sendField">Identify orders by field *</label>
@@ -70,37 +70,37 @@
             <div class="form-group">
               <label>API Key BorderGuru</label>
               <input type="text" class="form-control" placeholder="apiKeyBorderGuru" name="apiKeyBorderGuru"
-                     [(ngModel)]="store.apiKeyBorderGuru">
+                [(ngModel)]="store.apiKeyBorderGuru">
             </div>
 
             <div class="form-group">
               <label>Merchant Key BorderGuru</label>
               <input type="text" class="form-control" placeholder="apiKeyMerchant" name="apiKeyMerchant"
-                     [(ngModel)]="store.apiKeyMerchant">
+                [(ngModel)]="store.apiKeyMerchant">
             </div>
 
             <div class="form-group">
               <label>API Key Shopify *</label>
               <input type="text" class="form-control" placeholder="apiKeyShopify" name="apiKeyShopify"
-                     [(ngModel)]="store.apiKeyShopify" required>
+                [(ngModel)]="store.apiKeyShopify" required>
             </div>
 
             <div class="form-group">
               <label>API Secret Shopify *</label>
               <input type="text" class="form-control" placeholder="apiSecretShopify" name="apiSecretShopify"
-                     [(ngModel)]="store.apiSecretShopify" required>
+                [(ngModel)]="store.apiSecretShopify" required>
             </div>
 
             <div class="form-group">
               <label>API Key Admin *</label>
               <input type="text" class="form-control" placeholder="apiKeyAdmin" name="apiKeyAdmin"
-                     [(ngModel)]="store.apiKeyAdmin" required>
+                [(ngModel)]="store.apiKeyAdmin" required>
             </div>
 
             <div class="form-group">
               <label>API Secret Admin *</label>
               <input type="text" class="form-control" placeholder="apiSecretAdmin" name="apiSecretAdmin"
-                     [(ngModel)]="store.apiSecretAdmin" required>
+                [(ngModel)]="store.apiSecretAdmin" required>
             </div>
 
             <div class="form-group" *ngIf="store.accessToken">
@@ -110,7 +110,7 @@
             <div class="form-group">
               <label>Account Number</label>
               <input type="text" class="form-control" placeholder="Account Number" name="accountNumber"
-                     [(ngModel)]="store.accountNumber">
+                [(ngModel)]="store.accountNumber">
             </div>
 
           </div>
@@ -120,8 +120,7 @@
             <div class="form-group">
               <label for="countryOfOrigin">Country Of Origin *</label>
               <select class="form-control" name="countryOfOrigin" id="countryOfOrigin"
-                      [(ngModel)]="store.countryOfOrigin"
-                      required>
+                [(ngModel)]="store.countryOfOrigin" required>
                 <option value="AF">Afghanistan</option>
                 <option value="AX">Åland Islands</option>
                 <option value="AL">Albania</option>
@@ -632,7 +631,7 @@
             <div class="form-group">
               <label>State *</label>
               <input type="text" class="form-control" placeholder="State" name="state" [(ngModel)]="store.state"
-                     required>
+                required>
             </div>
             <div class="form-group">
               <label>City *</label>
@@ -641,18 +640,17 @@
             <div class="form-group">
               <label>Postcode *</label>
               <input type="text" class="form-control" placeholder="Postcode" name="postcode"
-                     [(ngModel)]="store.postcode"
-                     required>
+                [(ngModel)]="store.postcode" required>
             </div>
             <div class="form-group">
               <label>House No *</label>
               <input type="text" class="form-control" placeholder="House No" name="houseNo" [(ngModel)]="store.houseNo"
-                     required>
+                required>
             </div>
             <div class="form-group">
               <label>Street Name *</label>
               <input type="text" class="form-control" placeholder="Street Name" name="streetName"
-                     [(ngModel)]="store.streetName" required>
+                [(ngModel)]="store.streetName" required>
             </div>
 
             <fieldset class="form-group">
@@ -668,7 +666,7 @@
             <div class="form-group">
               <label for="dimensionalScale">Weight Scale:</label>
               <select class="form-control" id="totalWeightScale" name="totalWeightScale"
-                      [(ngModel)]="store.totalWeightScale">
+                [(ngModel)]="store.totalWeightScale">
                 <option value="kg">kg</option>
                 <option value="lb">lb</option>
               </select>
@@ -682,7 +680,7 @@
             <div class="form-group">
               <label for="dimensionalScale">Dimensional Scale:</label>
               <select class="form-control" id="dimensionalScale" name="dimensionalScale"
-                      [(ngModel)]="store.dimensionalScale">
+                [(ngModel)]="store.dimensionalScale">
                 <option value="cm">cm</option>
                 <option value="in">inch</option>
               </select>
@@ -713,13 +711,21 @@
         </div>
         <div class="col-1"></div>
         <div class="col-1">
-          <button class="btn btn-success btn-space" (click)="storeSave()"
-                  [disabled]="!storeForm.form.valid">
+          <button class="btn btn-success btn-space" (click)="storeSave()" [disabled]="!storeForm.form.valid">
             &nbsp;&nbsp;Save&nbsp;&nbsp;
           </button>
         </div>
+        <div class="col-1"></div>
+        <div class="col-1">
+          <button class="btn btn-secondary btn-space" (click)="showShippingRateForm = !showShippingRateForm">Shipping Rates</button>
+        </div>
       </div>
-
+      <br>
+      <div class="row" *ngIf="showShippingRateForm">
+        <div class="col-12">
+          <app-shipping-rate [rates]="[]" [storeId]="store._id"></app-shipping-rate>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -737,30 +743,30 @@
       <div class="card-block table-responsive">
         <table class="table table-bordered">
           <thead class="thead-inverse">
-          <tr>
-            <th>Company</th>
-            <th>Name</th>
-            <th>Status</th>
-            <th>Edit</th>
-            <th>Service</th>
-            <th>Delete</th>
-          </tr>
+            <tr>
+              <th>Company</th>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Edit</th>
+              <th>Service</th>
+              <th>Delete</th>
+            </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let store of storesList;">
-            <td>{{store.company}}</td>
-            <td>{{store.storeName}}</td>
-            <td>{{store.status}}</td>
-            <td>
-              <button class="btn btn-warning" (click)="editStore(store._id)">Edit</button>
-            </td>
-            <td>
-              <button class="btn btn-danger" (click)="installService(store._id)">Install</button>
-            </td>
-            <td>
-              <button class="btn btn-danger" (click)="deleteStore(store._id)">Delete</button>
-            </td>
-          </tr>
+            <tr *ngFor="let store of storesList;">
+              <td>{{store.company}}</td>
+              <td>{{store.storeName}}</td>
+              <td>{{store.status}}</td>
+              <td>
+                <button class="btn btn-warning" (click)="editStore(store._id)">Edit</button>
+              </td>
+              <td>
+                <button class="btn btn-danger" (click)="installService(store._id)">Install</button>
+              </td>
+              <td>
+                <button class="btn btn-danger" (click)="deleteStore(store._id)">Delete</button>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>

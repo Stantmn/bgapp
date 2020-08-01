@@ -7,6 +7,7 @@ import { StoreRoutingModule } from './store-routing.module';
 import { StoreComponent } from './store.component';
 import { PageHeaderModule } from '../../shared/modules';
 import { SharedPipesModule } from '../../shared';
+import { ShippingRateComponent } from '../shipping-rate/shipping-rate.component';
 
 @NgModule({
   imports: [
@@ -17,7 +18,7 @@ import { SharedPipesModule } from '../../shared';
     PageHeaderModule,
     SharedPipesModule
   ],
-  declarations: [StoreComponent]
+  declarations: [StoreComponent, ShippingRateComponent]
 })
 export class StoreModule {
 }
