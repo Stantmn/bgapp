@@ -3,11 +3,10 @@ import { ModalComponent } from '../../shared/modules/modal/modal.component';
 import { routerTransition } from '../../router.animations';
 import { Store } from '../../classes/store';
 import { StoreService } from '../../services/store.service';
-import { Webhook } from '../../classes/webhook';
 import { DOCUMENT } from '@angular/common';
 
 @Component({
-  selector: 'app-store',
+  selector: 'app-billing',
   templateUrl: './billing.component.html',
   styleUrls: ['./billing.component.scss'],
   providers: [StoreService],

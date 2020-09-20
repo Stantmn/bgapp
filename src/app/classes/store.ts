@@ -2,6 +2,8 @@ export class Store {
   _id: string;
   status: string;
   storeName: string;
+  taxes: boolean;
+  duties: boolean;
   differentFulfillment: boolean;
   fulfillmentService: boolean;
   fulfillmentServiceId: number;

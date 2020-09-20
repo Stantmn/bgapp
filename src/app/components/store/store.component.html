@@ -49,12 +49,22 @@
             </div>
 
             <div class="form-group">
-              <label for="differentFulfillment">3rd Party Fulfillment:</label>
+              <label for="taxes">Includes Taxes: </label>
+              <input type="checkbox" name="taxes" id="taxes"
+                [(ngModel)]="store.taxes">
+            </div>
+            <div class="form-group">
+              <label for="duties">Incudes Duties: </label>
+              <input type="checkbox" name="duties" id="duties"
+                [(ngModel)]="store.duties">
+            </div>
+            <div class="form-group">
+              <label for="differentFulfillment">3rd Party Fulfillment: </label>
               <input type="checkbox" name="differentFulfillment" id="differentFulfillment"
                 [(ngModel)]="store.differentFulfillment">
             </div>
             <div class="form-group">
-              <label for="fulfillmentService">Fulfillment Service:</label>
+              <label for="fulfillmentService">Fulfillment Service: </label>
               <input type="checkbox" name="fulfillmentService" id="fulfillmentService"
                 [(ngModel)]="store.fulfillmentService">
             </div>
